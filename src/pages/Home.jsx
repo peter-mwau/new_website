@@ -76,8 +76,8 @@ function Home() {
                     {/* CTA Buttons */}
                     <div className="flex flex-col sm:flex-row gap-6 items-start mb-12">
                       <button className="group relative px-8 sm:px-10 py-4 font-bold text-white text-lg overflow-hidden rounded-xl transition-all duration-300 hover:scale-105 active:scale-95">
-                        <div className="absolute inset-0 bg-gradient-to-r from-purple-600 via-pink-500 to-cyan-400 rounded-xl"></div>
-                        <div className="absolute inset-0 bg-gradient-to-r from-purple-600 via-pink-500 to-cyan-400 rounded-xl opacity-50 blur-xl group-hover:opacity-75 transition-opacity"></div>
+                        <div className="absolute inset-0 bg-purple-600rounded-xl"></div>
+                        <div className="absolute inset-0 bg-purple-600 rounded-xl opacity-50 blur-xl group-hover:opacity-75 transition-opacity"></div>
                         <span className="relative z-10">
                           Start Your Project
                         </span>

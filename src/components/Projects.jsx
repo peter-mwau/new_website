@@ -228,7 +228,7 @@ function Projects() {
       }}
     >
       {/* Enhanced Background Overlay */}
-      <div className="absolute inset-0 bg-gradient-to-br from-black/70 via-purple-900/30 to-black/70"></div>
+      <div className="absolute inset-0 bg-gradient-to-bl from-black/70 via-purple-900/30 to-black/70"></div>
 
       {/* Animated Background Elements */}
       <div className="absolute inset-0 overflow-hidden">
