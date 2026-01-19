@@ -22,7 +22,7 @@ function Home() {
             {/* Glassmorphism Background with Corner Cuts */}
             <div className="relative overflow-hidden">
               {/* Glassmorphic Base */}
-              <div className="backdrop-blur-xl bg-gradient-to-br from-white/15 to-white/5 border border-white/30 rounded-[40px] p-8 md:p-12 shadow-2xl">
+              <div className=" p-8 md:p-12 shadow-2xl">
                 {/* Corner Cut Decorations */}
                 <div className="absolute -top-2 -left-2 w-16 h-16">
                   <div className="absolute inset-0 bg-gradient-to-br from-cyan-400/30 to-purple-500/30 backdrop-blur-sm rounded-lg rotate-45"></div>

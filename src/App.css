@@ -40,3 +40,50 @@
 .read-the-docs {
   color: #888;
 }
+
+/* Glassmorphism and animations for Projects component */
+.glass-card {
+  background: linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 0.06),
+    rgba(255, 255, 255, 0.03)
+  );
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(8px) saturate(120%);
+  -webkit-backdrop-filter: blur(8px) saturate(120%);
+  box-shadow: 0 6px 18px rgba(2, 6, 23, 0.45);
+  animation: fadeInUp 420ms ease forwards;
+  opacity: 0;
+  transform: translateY(8px) scale(0.995);
+}
+
+.glass-modal {
+  background: linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 0.04),
+    rgba(255, 255, 255, 0.02)
+  );
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(10px) saturate(120%);
+  -webkit-backdrop-filter: blur(10px) saturate(120%);
+  box-shadow: 0 12px 40px rgba(2, 6, 23, 0.6);
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(8px) scale(0.995);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+/* small utility for modal image */
+.glass-modal img {
+  transition: transform 300ms ease;
+}
+.glass-modal img:hover {
+  transform: scale(1.02);
+}
