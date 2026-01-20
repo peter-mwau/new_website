@@ -3,7 +3,8 @@
 import { Routes, Route } from "react-router-dom";
 import Home from "./pages/Home";
 import Navbar from "./components/Navbar";
-import Projects from "./components/Projects";
+import Projects from "./sections/Projects";
+import Team from "./sections/Team";
 
 function App() {
   return (
@@ -13,6 +14,7 @@ function App() {
         <Route path="/" element={<Home />} />
       </Routes>
       <Projects />
+      <Team />
     </>
   );
 }
