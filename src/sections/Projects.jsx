@@ -9,6 +9,7 @@ import {
   Code,
   Users,
 } from "lucide-react";
+import { useInView } from "../hooks/useInView";
 
 const sampleProjects = [
   {
@@ -217,18 +218,27 @@ function Projects() {
     return () => window.removeEventListener("keydown", handleKeyDown);
   }, [active]);
 
+  const [sectionRef, isInView, blur] = useInView();
+
   return (
     <div
-      className="w-full min-h-screen flex flex-col items-center justify-start py-20 relative overflow-hidden"
+      ref={sectionRef}
+      className={`w-full min-h-screen flex flex-col items-center justify-start py-20 relative overflow-hidden transition-opacity duration-1000 ${
+        isInView ? "opacity-100" : "opacity-0"
+      }`}
       style={{
         backgroundImage: "url(/about.jpg)",
         backgroundSize: "cover",
         backgroundPosition: "center",
         backgroundAttachment: "fixed",
+        filter: `blur(${blur}px)`,
       }}
     >
       {/* Enhanced Background Overlay */}
       <div className="absolute inset-0 bg-gradient-to-bl from-black/70 via-purple-900/30 to-black/70"></div>
+
+      {/* Bottom Gradient Blur Transition */}
+      <div className="absolute bottom-0 left-0 right-0 h-48 bg-gradient-to-b from-transparent via-black/30 to-black/80 pointer-events-none blur-xl"></div>
 
       {/* Animated Background Elements */}
       <div className="absolute inset-0 overflow-hidden">
