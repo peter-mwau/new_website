@@ -2,20 +2,26 @@
 // import "./App.css";
 import { Routes, Route } from "react-router-dom";
 import Home from "./pages/Home";
-import Navbar from "./components/Navbar";
-import Projects from "./components/Projects";
+
+import { useEffect } from "react";
 import Footer from "./components/Footer";
 
 
 function App() {
+  // Enable smooth scrolling on the entire page
+  useEffect(() => {
+    document.documentElement.style.scrollBehavior = "smooth";
+    return () => {
+      document.documentElement.style.scrollBehavior = "auto";
+    };
+  }, []);
+
   return (
     <>
-      <Navbar />
       <Routes>
         <Route path="/" element={<Home />} />
 
       </Routes>
-      <Projects />
       <Footer />
     </>
   );
