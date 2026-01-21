@@ -24,49 +24,52 @@ function Home() {
     contacts: { component: Contacts, background: VantaBirdsBG },
   };
 
-  const ActiveSectionComponent = sections[activeSection].component;
-  const ActiveBackgroundComponent = sections[activeSection].background;
+  // Using mapped components directly below; no need for separate vars
 
   return (
     <div className="relative h-screen w-full overflow-hidden">
       {/* Fixed background layer with transitions */}
       <div className="fixed inset-0 z-0">
-        {Object.entries(sections).map(([key, { background: BgComponent }]) => (
+        {Object.keys(sections).map((key) => (
           <div
             key={key}
-            className={`absolute inset-0 transition-opacity duration-1000 ease-in-out ${
+            className={`absolute inset-0 transition-opacity duration-1000 ease-in-out pointer-events-none ${
               activeSection === key ? "opacity-100" : "opacity-0"
             }`}
           >
-            <BgComponent />
+            {React.createElement(sections[key].background)}
           </div>
         ))}
       </div>
 
-      {/* Navbar */}
-      <div className="relative z-50">
-        <Navbar
-          activeSection={activeSection}
-          setActiveSection={setActiveSection}
-        />
-      </div>
+      {/* Navbar (hidden on hero) */}
+      {activeSection !== "hero" && (
+        <div className="relative z-50">
+          <Navbar
+            activeSection={activeSection}
+            setActiveSection={setActiveSection}
+          />
+        </div>
+      )}
 
       {/* Section content with transitions */}
       <div className="relative z-10 h-screen w-full">
-        {Object.entries(sections).map(
-          ([key, { component: SectionComponent }]) => (
-            <div
-              key={key}
-              className={`absolute inset-0 h-screen w-full transition-all duration-700 ease-in-out ${
-                activeSection === key
-                  ? "opacity-100 translate-x-0 scale-100"
-                  : "opacity-0 translate-x-8 scale-95 pointer-events-none"
-              }`}
-            >
-              <SectionComponent />
-            </div>
-          ),
-        )}
+        {Object.keys(sections).map((key) => (
+          <div
+            key={key}
+            className={`absolute inset-0 h-screen w-full transition-all duration-700 ease-in-out ${
+              activeSection === key
+                ? "opacity-100 translate-x-0 scale-100"
+                : "opacity-0 translate-x-8 scale-95 pointer-events-none"
+            }`}
+          >
+            {key === "hero"
+              ? React.createElement(sections[key].component, {
+                  onNavigate: setActiveSection,
+                })
+              : React.createElement(sections[key].component)}
+          </div>
+        ))}
       </div>
     </div>
   );

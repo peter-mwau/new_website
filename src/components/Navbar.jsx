@@ -26,7 +26,7 @@ function Navbar({ activeSection, setActiveSection }) {
             alt="Logo"
             className="h-8 w-auto group-hover:rotate-12 transition-transform"
           />
-          <span className="text-xl font-black bg-gradient-to-r from-cyan-400 via-purple-400 to-pink-400 bg-clip-text text-transparent">
+          <span className="text-xl font-black bg-linear-to-r from-cyan-400 via-purple-400 to-pink-400 bg-clip-text text-transparent">
             Nyota Digital Labs
           </span>
         </div>
@@ -45,7 +45,7 @@ function Navbar({ activeSection, setActiveSection }) {
               >
                 {item.label}
                 <span
-                  className={`absolute bottom-0 left-0 h-0.5 bg-gradient-to-r from-cyan-400 to-purple-400 transition-all duration-300 ${
+                  className={`absolute bottom-0 left-0 h-0.5 bg-linear-to-r from-cyan-400 to-purple-400 transition-all duration-300 ${
                     activeSection === item.section
                       ? "w-full"
                       : "w-0 group-hover:w-full"
