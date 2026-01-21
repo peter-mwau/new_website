@@ -1,83 +1,73 @@
 // src/pages/Home.jsx
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState } from "react";
+import Navbar from "../components/Navbar";
 import Hero from "../sections/Hero";
 import Services from "../sections/Services";
 import Projects from "../sections/Projects";
 import Team from "../sections/Team";
 import Contacts from "../sections/Contacts";
-import WebThreeRareBG from '../backgrounds/WebThreeRareBg-dark';
+import WebThreeRareBG from "../backgrounds/WebThreeRareBg-dark";
 import VantaNetBG from "../backgrounds/VantaNetBg";
 import VantaGlobeBG from "../backgrounds/VantaGlobeBG";
 import VantaDotsBG from "../backgrounds/VantaDotsBg";
 import VantaBirdsBG from "../backgrounds/VantaBirdsBg";
 
 function Home() {
-  const [activeBackground, setActiveBackground] = useState('hero');
-  const sectionsRef = useRef([]);
+  const [activeSection, setActiveSection] = useState("hero");
 
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      (entries) => {
-        let maxRatio = 0;
-        let active = 'hero';
-        entries.forEach((entry) => {
-          if (entry.isIntersecting && entry.intersectionRatio > maxRatio) {
-            maxRatio = entry.intersectionRatio;
-            active = entry.target.id;
-          }
-        });
-        setActiveBackground(active);
-      },
-      { threshold: [0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1.0] }
-    );
-
-    sectionsRef.current.forEach((section) => {
-      if (section) observer.observe(section);
-    });
-
-    return () => observer.disconnect();
-  }, []);
-
-  const renderBackground = () => {
-    switch (activeBackground) {
-      case 'hero':
-        return <WebThreeRareBG />;
-      case 'services':
-        return <VantaNetBG />;
-      case 'projects':
-        return <VantaGlobeBG />;
-      case 'team':
-        return <VantaDotsBG />;
-      case 'contacts':
-        return <VantaBirdsBG />;
-      default:
-        return <WebThreeRareBG />;
-    }
+  const sections = {
+    hero: { component: Hero, background: WebThreeRareBG },
+    services: { component: Services, background: VantaNetBG },
+    projects: { component: Projects, background: VantaGlobeBG },
+    team: { component: Team, background: VantaDotsBG },
+    contacts: { component: Contacts, background: VantaBirdsBG },
   };
 
+  const ActiveSectionComponent = sections[activeSection].component;
+  const ActiveBackgroundComponent = sections[activeSection].background;
+
   return (
-    <>
+    <div className="relative h-screen w-full overflow-hidden">
+      {/* Fixed background layer with transitions */}
       <div className="fixed inset-0 z-0">
-        {renderBackground()}
+        {Object.entries(sections).map(([key, { background: BgComponent }]) => (
+          <div
+            key={key}
+            className={`absolute inset-0 transition-opacity duration-1000 ease-in-out ${
+              activeSection === key ? "opacity-100" : "opacity-0"
+            }`}
+          >
+            <BgComponent />
+          </div>
+        ))}
       </div>
-      <div className="relative z-10">
-        <div id="hero" ref={(el) => (sectionsRef.current[0] = el)}>
-          <Hero />
-        </div>
-        <div id="services" ref={(el) => (sectionsRef.current[1] = el)}>
-          <Services />
-        </div>
-        <div id="projects" ref={(el) => (sectionsRef.current[2] = el)}>
-          <Projects />
-        </div>
-        <div id="team" ref={(el) => (sectionsRef.current[3] = el)}>
-          <Team />
-        </div>
-        <div id="contacts" ref={(el) => (sectionsRef.current[4] = el)}>
-          <Contacts />
-        </div>
+
+      {/* Navbar */}
+      <div className="relative z-50">
+        <Navbar
+          activeSection={activeSection}
+          setActiveSection={setActiveSection}
+        />
       </div>
-    </>
+
+      {/* Section content with transitions */}
+      <div className="relative z-10 h-screen w-full">
+        {Object.entries(sections).map(
+          ([key, { component: SectionComponent }]) => (
+            <div
+              key={key}
+              className={`absolute inset-0 h-screen w-full transition-all duration-700 ease-in-out ${
+                activeSection === key
+                  ? "opacity-100 translate-x-0 scale-100"
+                  : "opacity-0 translate-x-8 scale-95 pointer-events-none"
+              }`}
+            >
+              <SectionComponent />
+            </div>
+          ),
+        )}
+      </div>
+    </div>
   );
 }
 export default Home;

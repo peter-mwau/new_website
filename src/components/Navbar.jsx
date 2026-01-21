@@ -1,46 +1,25 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 
-function Navbar() {
-  const [isVisible, setIsVisible] = useState(true);
-  const [lastScrollY, setLastScrollY] = useState(0);
-  const [isScrolled, setIsScrolled] = useState(false);
+function Navbar({ activeSection, setActiveSection }) {
+  const menuItems = [
+    { label: "Home", section: "hero" },
+    { label: "Services", section: "services" },
+    { label: "Projects", section: "projects" },
+    { label: "Team", section: "team" },
+    { label: "Contact", section: "contacts" },
+  ];
 
-  useEffect(() => {
-    const handleScroll = () => {
-      const currentScrollY = window.scrollY;
-
-      // Show navbar when scrolling up, hide when scrolling down
-      if (currentScrollY < lastScrollY) {
-        setIsVisible(true);
-      } else if (currentScrollY > 100) {
-        setIsVisible(false);
-      }
-
-      // Add background when scrolled down
-      setIsScrolled(currentScrollY > 50);
-      setLastScrollY(currentScrollY);
-    };
-
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, [lastScrollY]);
+  const handleNavigate = (section) => {
+    setActiveSection(section);
+  };
 
   return (
-    <nav
-      className={`relative  z-50 px-8 py-5 transition-all duration-300 ${
-        isVisible ? "translate-y-0" : "-translate-y-full"
-      } ${
-        isScrolled
-          ? "bg-black/40 backdrop-blur-xl shadow-2xl border-b border-white/10"
-          : "bg-transparent"
-      }`}
-    >
+    <nav className="relative z-50 px-8 py-5 bg-black/40 backdrop-blur-xl shadow-2xl border-b border-white/10 transition-all duration-300">
       <div className="max-w-7xl mx-auto flex justify-between items-center">
         {/* Logo Section */}
         <div
-          className={`flex flex-row gap-3 items-center transition-all duration-300 group cursor-pointer ${
-            isScrolled ? "text-white" : "text-white"
-          }`}
+          onClick={() => handleNavigate("hero")}
+          className="flex flex-row gap-3 items-center transition-all duration-300 group cursor-pointer text-white"
         >
           <img
             src="/vite.svg"
@@ -54,26 +33,36 @@ function Navbar() {
 
         {/* Navigation Links (desktop) */}
         <ul className="hidden lg:flex gap-10 items-center">
-          {["Home", "About", "Services", "Contact"].map((item) => (
-            <li key={item}>
-              <a
-                href="#"
+          {menuItems.map((item) => (
+            <li key={item.section}>
+              <button
+                onClick={() => handleNavigate(item.section)}
                 className={`relative text-sm font-medium transition-all duration-300 group ${
-                  isScrolled
-                    ? "text-gray-200 hover:text-white"
-                    : "text-white/80 hover:text-white"
+                  activeSection === item.section
+                    ? "text-white"
+                    : "text-gray-300 hover:text-white"
                 }`}
               >
-                {item}
-                <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-gradient-to-r from-cyan-400 to-purple-400 group-hover:w-full transition-all duration-300"></span>
-              </a>
+                {item.label}
+                <span
+                  className={`absolute bottom-0 left-0 h-0.5 bg-gradient-to-r from-cyan-400 to-purple-400 transition-all duration-300 ${
+                    activeSection === item.section
+                      ? "w-full"
+                      : "w-0 group-hover:w-full"
+                  }`}
+                ></span>
+              </button>
             </li>
           ))}
         </ul>
 
         {/* Mobile menu toggle */}
         <div className="lg:hidden flex items-end">
-          <MobileMenu />
+          <MobileMenu
+            menuItems={menuItems}
+            activeSection={activeSection}
+            onNavigate={handleNavigate}
+          />
         </div>
 
         {/* CTA Button */}
@@ -92,18 +81,13 @@ function Navbar() {
   );
 }
 
-function MobileMenu() {
+function MobileMenu({ menuItems, activeSection, onNavigate }) {
   const [open, setOpen] = useState(false);
-  const items = ["Home", "About", "Services", "Contact"];
 
-  useEffect(() => {
-    if (!open) return;
-    const onKey = (e) => {
-      if (e.key === "Escape") setOpen(false);
-    };
-    window.addEventListener("keydown", onKey);
-    return () => window.removeEventListener("keydown", onKey);
-  }, [open]);
+  const handleItemClick = (section) => {
+    onNavigate(section);
+    setOpen(false);
+  };
 
   return (
     <div className="relative">
@@ -141,15 +125,18 @@ function MobileMenu() {
       {open && (
         <div className="absolute right-0 mt-2 w-56 bg-black/60 backdrop-blur-xl border border-white/10 rounded-lg shadow-lg py-3 z-50">
           <ul className="flex flex-col gap-1">
-            {items.map((it) => (
-              <li key={it}>
-                <a
-                  href="#"
-                  onClick={() => setOpen(false)}
-                  className="block px-4 py-2 text-sm text-white/90 hover:bg-white/5"
+            {menuItems.map((item) => (
+              <li key={item.section}>
+                <button
+                  onClick={() => handleItemClick(item.section)}
+                  className={`block w-full text-left px-4 py-2 text-sm transition-colors ${
+                    activeSection === item.section
+                      ? "text-white bg-white/10"
+                      : "text-white/90 hover:bg-white/5"
+                  }`}
                 >
-                  {it}
-                </a>
+                  {item.label}
+                </button>
               </li>
             ))}
           </ul>
