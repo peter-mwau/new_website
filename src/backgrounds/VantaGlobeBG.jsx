@@ -97,7 +97,7 @@ export default function VantaGlobeBG({
           size,
           color: darkMode ? 0xfce600 : 0x0b5c85,
           color2: darkMode ? 0xffff : 0xf2b705,
-          backgroundColor: darkMode ? 0x050914 : 0xf7f7f7,
+          backgroundColor: darkMode ? 0x090c13 : 0x090c13,
           points,
           maxDistance: 22.0,
           spacing,

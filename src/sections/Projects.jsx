@@ -231,7 +231,7 @@ function Projects() {
     >
       <VantaGlobeBG />
       {/* Enhanced Background Overlay */}
-      <div className="absolute inset-0 bg-gradient-to-bl from-black/70 via-purple-900/30 to-black/70"></div>
+      <div className="absolute inset-0"></div>
 
       {/* Bottom Gradient Blur Transition */}
       <div className="absolute bottom-0 left-0 right-0 h-48 bg-gradient-to-b from-transparent via-black/30 to-black/80 pointer-events-none blur-xl"></div>

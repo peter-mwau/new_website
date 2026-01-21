@@ -41,9 +41,9 @@ export default function VantaBirdsBG({
   interactive = false,
   className = "",
   style = {},
-  backgroundColor = 0x0e25, // default taken from your snippet (consider using full hex like 0x00e225)
+  backgroundColor = 0x090c13, // default taken from your snippet (consider using full hex like 0x00e225)
   color2 = 0x0cfff,
-  colorMode = "variance",
+  colorMode = "lerp", //vaibrant, lerp, solid
   birdSize = 0.8,
   wingSpan = 23.0,
   speedLimit = 6.0,

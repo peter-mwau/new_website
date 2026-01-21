@@ -1,4 +1,3 @@
-// src/pages/Home.jsx
 import React, { useState } from "react";
 import Navbar from "../components/Navbar";
 import Hero from "../sections/Hero";
@@ -6,43 +5,46 @@ import Services from "../sections/Services";
 import Projects from "../sections/Projects";
 import Team from "../sections/Team";
 import Contacts from "../sections/Contacts";
+
 import WebThreeRareBG from "../backgrounds/WebThreeRareBg-dark";
 import VantaNetBG from "../backgrounds/VantaNetBg";
 import VantaGlobeBG from "../backgrounds/VantaGlobeBG";
 import VantaDotsBG from "../backgrounds/VantaDotsBg";
 import VantaBirdsBG from "../backgrounds/VantaBirdsBg";
-import Footer from "../components/Footer";
 
 function Home() {
   const [activeSection, setActiveSection] = useState("hero");
 
   const sections = {
-    hero: { component: Hero, background: WebThreeRareBG },
-    services: { component: Services, background: VantaNetBG },
-    projects: { component: Projects, background: VantaGlobeBG },
-    team: { component: Team, background: VantaDotsBG },
-    contacts: { component: Contacts, background: VantaBirdsBG },
+    hero: { Component: Hero, Background: WebThreeRareBG },
+    services: { Component: Services, Background: VantaNetBG },
+    projects: { Component: Projects, Background: VantaGlobeBG },
+    team: { Component: Team, Background: VantaDotsBG },
+    contacts: { Component: Contacts, Background: VantaBirdsBG },
   };
-
-  // Using mapped components directly below; no need for separate vars
 
   return (
     <div className="relative h-screen w-full overflow-hidden">
-      {/* Fixed background layer with transitions */}
+      {/* Backgrounds (always pointer-events-none to avoid capturing clicks) */}
       <div className="fixed inset-0 z-0">
-        {Object.keys(sections).map((key) => (
+        {Object.entries(sections).map(([key, { Background }]) => (
           <div
             key={key}
-            className={`absolute inset-0 transition-opacity duration-1000 ease-in-out pointer-events-none ${
+            // ensure background is never on top and never captures pointer events
+            className={`absolute inset-0 transition-opacity duration-1000 pointer-events-none ${
               activeSection === key ? "opacity-100" : "opacity-0"
             }`}
+            style={{ zIndex: 0 }}
           >
-            {React.createElement(sections[key].background)}
+            {/* force no pointer events on the background wrapper */}
+            <div className="no-pointer-events">
+              <Background />
+            </div>
           </div>
         ))}
       </div>
 
-      {/* Navbar (hidden on hero) */}
+      {/* Navbar */}
       {activeSection !== "hero" && (
         <div className="relative z-50">
           <Navbar
@@ -52,26 +54,29 @@ function Home() {
         </div>
       )}
 
-      {/* Section content with transitions */}
+      {/* Sections: active section has pointer-events enabled and higher z-index */}
       <div className="relative z-10 h-screen w-full">
-        {Object.keys(sections).map((key) => (
-          <div
-            key={key}
-            className={`absolute inset-0 h-screen w-full transition-all duration-700 ease-in-out ${
-              activeSection === key
-                ? "opacity-100 translate-x-0 scale-100"
-                : "opacity-0 translate-x-8 scale-95 pointer-events-none"
-            }`}
-          >
-            {key === "hero"
-              ? React.createElement(sections[key].component, {
-                  onNavigate: setActiveSection,
-                })
-              : React.createElement(sections[key].component)}
-          </div>
-        ))}
+        {Object.entries(sections).map(([key, { Component }]) => {
+          const isActive = activeSection === key;
+          return (
+            <div
+              key={key}
+              // when active: ensure pointer events and top stacking so clicks register
+              className={`absolute inset-0 transition-all duration-700 ease-in-out ${
+                isActive
+                  ? "opacity-100 translate-x-0 scale-100 pointer-events-auto"
+                  : "opacity-0 translate-x-8 scale-95 pointer-events-none"
+              }`}
+              style={{ zIndex: isActive ? 40 : 10 }}
+            >
+              {/* pass onNavigate always; sections that don't use it just ignore it */}
+              <Component onNavigate={setActiveSection} />
+            </div>
+          );
+        })}
       </div>
     </div>
   );
 }
+
 export default Home;

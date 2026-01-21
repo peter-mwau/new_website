@@ -38,10 +38,10 @@ function loadScriptOnce(src) {
 }
 
 export default function VantaRingsBG({
-  interactive = false,
+  interactive = true,
   className = "",
   style = {},
-  backgroundColor = 0x0f70d2, // consider using full 0xRRGGBB values (e.g. 0x0F70D2)
+  backgroundColor = 0x090c13, // consider using full 0xRRGGBB values (e.g. 0x0F70D2)
   color = 0x83e80e,
   scale = 1.0,
   scaleMobile = 1.0,

@@ -87,3 +87,11 @@
 .glass-modal img:hover {
   transform: scale(1.02);
 }
+
+
+/* Force backgrounds / canvases to never capture pointer events.
+Use !important because some vintage Vanta/3rd-party scripts set pointer events directly on their canvas. */
+.no-pointer-events,
+.no-pointer-events * {
+  pointer-events: none !important;
+}

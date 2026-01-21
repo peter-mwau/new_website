@@ -43,7 +43,7 @@ export default function VantaDotsBG({
   style = {},
   color = 0xf2801d,
   color2 = 0xfa8620,
-  backgroundColor = 0x202020,
+  backgroundColor = 0x090c13,
   size = 2.8,
   spacing = 31.0,
   scale = 1.0,

@@ -2,11 +2,10 @@
 import React, { useRef, useEffect } from "react";
 import planetAssets from "../assets/solarData"; // expected to export array or objects with urls
 
-// WebThreeRareBG.jsx — updated & fixed
-// - fixed variable ordering bugs (_glowTexture, nebulaPlanes, pal used before defined)
-// - uses imported planetAssets (from ../constants/solarData)
-// - improves cleanup and event listener handling
-// - keeps original shaders & aesthetic
+// WebThreeRareBG.jsx — regenerated to expose crystalSpeed and slow wobble
+// - crystalSpeed prop accepts number or { spin, wobble, wobbleAmp }
+// - vertex & fragment shader time multipliers reduced to slow deformation & pulse
+// - default wobble is slower and subtler
 
 const THREE_CDN = "https://cdnjs.cloudflare.com/ajax/libs/three.js/r134/three.min.js";
 
@@ -97,7 +96,7 @@ export default function WebThreeRareBG(props) {
     secondary = DEFAULT_SECONDARY,
     bg = DEFAULT_BG,
     particleCount = 700,
-    crystalSize = 1.0,
+    crystalSize = 1.5,
     pixelRatio = 1.5,
     planetCount = 8,
     shootingStarRate = 0.006,
@@ -106,6 +105,8 @@ export default function WebThreeRareBG(props) {
     starCount = 2800,
     textureUrl = "src/assets/planets/azure-pigment-diffusing-water.jp",
     overlayDarkness = 0.35,
+    // crystalSpeed: number or { spin, wobble, wobbleAmp }
+    crystalSpeed = { spin: 0.0025, wobble: 0.05, wobbleAmp: 0.035 },
   } = props || {};
 
   const containerRef = useRef(null);
@@ -445,7 +446,7 @@ export default function WebThreeRareBG(props) {
         precision highp float; precision highp int; uniform mat4 modelViewMatrix; uniform mat4 projectionMatrix;
         varying vec3 vNormal; varying vec3 vPosition; uniform float uTime; uniform float uDisplace; attribute vec3 position; attribute vec3 normal; uniform vec2 uMouse;
         vec4 permute(vec4 x){ return mod(((x*34.0)+1.0)*x,289.0); }
-        float snoise(vec3 v){ /* snoise implementation truncated for brevity in string */ 
+        float snoise(vec3 v){
           const vec2 C = vec2(1.0/6.0,1.0/3.0); const vec4 D = vec4(0.0,0.5,1.0,2.0);
           vec3 i = floor(v + dot(v, C.yyy));
           vec3 x0 = v - i + dot(i, C.xxx);
@@ -484,14 +485,34 @@ export default function WebThreeRareBG(props) {
           float t3 = 0.6 - dot(x3,x3); if(t3<0.0) n3 = 0.0; else { t3 *= t3; n3 = t3 * t3 * dot(g3, x3); }
           return 42.0 * (n0 + n1 + n2 + n3);
         }
-        void main(){ vNormal = normal; vec3 pos = position; float n = snoise(vec3(position * 1.5) + uTime * 0.6); float displacement = n * uDisplace * (0.6 + 0.4 * sin(uTime*0.7 + position.x*2.0)); vec2 m = (uMouse - 0.5) * 2.0; pos += normal * displacement + vec3(m.x, m.y, 0.0) * 0.12; vPosition = pos; gl_Position = projectionMatrix * modelViewMatrix * vec4(pos, 1.0); }
+        void main(){
+          vNormal = normal;
+          vec3 pos = position;
+          // slower noise & internal sin multipliers to match a calmer wobble
+          float n = snoise(vec3(position * 1.5) + uTime * 0.35);
+          float displacement = n * uDisplace * (0.6 + 0.4 * sin(uTime * 0.35 + position.x * 2.0));
+          vec2 m = (uMouse - 0.5) * 2.0;
+          pos += normal * displacement + vec3(m.x, m.y, 0.0) * 0.12;
+          vPosition = pos;
+          gl_Position = projectionMatrix * modelViewMatrix * vec4(pos, 1.0);
+        }
       `;
 
       const crystalFragmentShader = `
         precision highp float; precision highp int;
         varying vec3 vNormal; varying vec3 vPosition;
         uniform vec3 uPrimary; uniform vec3 uSecondary; uniform float uTime;
-        void main(){ vec3 N = normalize(vNormal); float fresnel = pow(1.0 - max(0.0, dot(N, vec3(0.0,0.0,1.0))), 2.0); float h = (vPosition.y + 1.6) * 0.4; vec3 base = mix(uPrimary, uSecondary, clamp(h,0.0,1.0)); float pulse = 0.3 + 0.7 * (0.5 + 0.5 * sin(uTime*0.9 + vPosition.x*1.5)); vec3 col = base * pulse; col += vec3(1.0,0.8,1.0) * fresnel * 0.45; gl_FragColor = vec4(col, 1.0); }
+        void main(){
+          vec3 N = normalize(vNormal);
+          float fresnel = pow(1.0 - max(0.0, dot(N, vec3(0.0,0.0,1.0))), 2.0);
+          float h = (vPosition.y + 1.6) * 0.4;
+          vec3 base = mix(uPrimary, uSecondary, clamp(h,0.0,1.0));
+          // slower pulse (reduced multiplier)
+          float pulse = 0.3 + 0.7 * (0.5 + 0.5 * sin(uTime * 0.5 + vPosition.x * 1.5));
+          vec3 col = base * pulse;
+          col += vec3(1.0,0.8,1.0) * fresnel * 0.45;
+          gl_FragColor = vec4(col, 1.0);
+        }
       `;
 
       const crystalMaterial = new THREE.RawShaderMaterial({
@@ -787,6 +808,11 @@ export default function WebThreeRareBG(props) {
       };
       if (interactive) window.addEventListener("mousemove", onMove);
 
+      // parse crystalSpeed (allow number or object)
+      const speedCfg = typeof crystalSpeed === "number"
+        ? { spin: crystalSpeed, wobble: crystalSpeed, wobbleAmp: 0.035 }
+        : { spin: 0.0025, wobble: 0.05, wobbleAmp: 0.035, ...crystalSpeed };
+
       // animation loop
       let t0 = performance.now() / 1000;
       let lastFrame = t0;
@@ -799,13 +825,14 @@ export default function WebThreeRareBG(props) {
           if (n.material && n.material.uniforms) n.material.uniforms.uTime.value = t * (0.6 + i * 0.2);
         });
 
-        crystal.rotation.y += 0.0025;
-        crystal.rotation.x = Math.sin(t * 0.12) * 0.06;
+        // use configured spin & wobble; wobbleAmp controls amplitude
+        crystal.rotation.y += speedCfg.spin;
+        crystal.rotation.x = Math.sin(t * speedCfg.wobble) * (speedCfg.wobbleAmp);
         wire.rotation.copy(crystal.rotation);
 
         for (let i = 0; i < planets.length; i++) {
           const p = planets[i];
-          p.userData.theta += p.userData.speed * 0.15;
+          p.userData.theta += p.userData.speed * 0.10;
           p.position.x = Math.cos(p.userData.theta) * p.userData.distance;
           p.position.z = Math.sin(p.userData.theta) * p.userData.distance;
           p.rotation.y += 0.002 + (i % 2 === 0 ? 0.001 : -0.001);
@@ -966,6 +993,7 @@ export default function WebThreeRareBG(props) {
     supernovaEnabled,
     starCount,
     textureUrl,
+    crystalSpeed,
   ]);
 
   const containerStyle = {
