@@ -4,6 +4,8 @@ import { Routes, Route } from "react-router-dom";
 import Home from "./pages/Home";
 import Navbar from "./components/Navbar";
 import Projects from "./components/Projects";
+import Footer from "./components/Footer";
+
 
 function App() {
   return (
@@ -11,8 +13,10 @@ function App() {
       <Navbar />
       <Routes>
         <Route path="/" element={<Home />} />
+
       </Routes>
       <Projects />
+      <Footer />
     </>
   );
 }
