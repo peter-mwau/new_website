@@ -11,6 +11,7 @@ import VantaNetBG from "../backgrounds/VantaNetBg";
 import VantaGlobeBG from "../backgrounds/VantaGlobeBG";
 import VantaDotsBG from "../backgrounds/VantaDotsBg";
 import VantaBirdsBG from "../backgrounds/VantaBirdsBg";
+import Footer from "../components/Footer";
 
 function Home() {
   const [activeSection, setActiveSection] = useState("hero");
