@@ -1,3 +1,4 @@
+// src/sections/Projects.jsx
 import React, { useState, useEffect } from "react";
 import {
   X,
@@ -10,6 +11,7 @@ import {
   Users,
 } from "lucide-react";
 import { useInView } from "../hooks/useInView";
+import VantaGlobeBG from "../backgrounds/VantaGlobeBG";
 
 const sampleProjects = [
   {
@@ -226,14 +228,8 @@ function Projects() {
       className={`w-full min-h-screen flex flex-col items-center justify-start py-20 relative overflow-hidden transition-opacity duration-1000 ${
         isInView ? "opacity-100" : "opacity-0"
       }`}
-      style={{
-        backgroundImage: "url(/about.jpg)",
-        backgroundSize: "cover",
-        backgroundPosition: "center",
-        backgroundAttachment: "fixed",
-        filter: `blur(${blur}px)`,
-      }}
     >
+      <VantaGlobeBG />
       {/* Enhanced Background Overlay */}
       <div className="absolute inset-0 bg-gradient-to-bl from-black/70 via-purple-900/30 to-black/70"></div>
 

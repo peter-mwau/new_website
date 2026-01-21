@@ -1,3 +1,4 @@
+// src/sections/Team.jsx
 import {
   Github,
   Linkedin,
@@ -13,6 +14,7 @@ import {
   ChevronRight,
 } from "lucide-react";
 import React, { useEffect, useState } from "react";
+import VantaDotsBG from "../backgrounds/VantaDotsBg";
 
 function Team() {
   const [profiles, setProfiles] = useState([]);
@@ -202,6 +204,7 @@ function Team() {
 
   return (
     <div className="min-h-screen py-12 bg-gray-50">
+      <VantaDotsBG />
       <div className="container mx-auto px-4">
         {/* Header */}
         <div className="text-center mb-12">
