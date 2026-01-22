@@ -10,6 +10,9 @@ import {
   GitBranch,
   ExternalLink,
   ChevronRight,
+  Calendar1,
+  Code2,
+  MapPinCheck,
 } from "lucide-react";
 import React, { useEffect, useState } from "react";
 import VantaDotsBG from "../backgrounds/VantaDotsBg";
@@ -20,10 +23,87 @@ function Team() {
   const [error, setError] = useState(null);
   const [activeMember, setActiveMember] = useState(null);
 
-  const githubUsernames = ["peter-mwau", "NORMTOSH", "Mickmacha", "AdoyoClifford"];
+  const githubUsernames = [
+    "peter-mwau",
+    "NORMTOSH",
+    "Mickmacha",
+    "AdoyoClifford",
+  ];
 
   const memberDetails = {
-    // include the same memberDetails object you had before
+    "peter-mwau": {
+      position: "Full Stack Developer",
+      email: "pierremwau4050@gmail.com",
+      linkedin: "https://www.linkedin.com/in/peter-kyale-6b11a4233/",
+      website: "https://petermwauportfolio.netlify.app/",
+      expertise: ["Solidity", "React", "Node.js", "MongoDB"],
+      yearsAtCompany: 1,
+      skills: [
+        { name: "Solidity", level: 85 },
+        { name: "React", level: 95 },
+        { name: "Node.js", level: 90 },
+        { name: "TypeScript", level: 88 },
+      ],
+      contributions: [
+        "Led the development of Nyota's core platform",
+        "Implemented CI/CD pipeline for faster deployments",
+        "Mentored junior developers in modern web practices",
+      ],
+    },
+    NORMTOSH: {
+      position: "Frontend Developer",
+      email: "normtosh@example.com",
+      linkedin: "https://linkedin.com/in/normtosh",
+      expertise: ["React", "UI/UX", "Tailwind"],
+      yearsAtCompany: 2,
+      skills: [
+        { name: "React", level: 92 },
+        { name: "CSS/Tailwind", level: 95 },
+        { name: "JavaScript", level: 90 },
+        { name: "UI/UX Design", level: 85 },
+      ],
+      contributions: [
+        "Created responsive design system for Nyota",
+        "Optimized application performance by 40%",
+        "Built reusable component library",
+      ],
+    },
+    Mickmacha: {
+      position: "Backend Developer",
+      email: "mickmacha@example.com",
+      linkedin: "https://linkedin.com/in/mickmacha",
+      expertise: ["Python", "Django", "PostgreSQL"],
+      yearsAtCompany: 2,
+      skills: [
+        { name: "Python", level: 93 },
+        { name: "Django", level: 90 },
+        { name: "PostgreSQL", level: 87 },
+        { name: "API Design", level: 89 },
+      ],
+      contributions: [
+        "Architected scalable backend infrastructure",
+        "Implemented secure authentication system",
+        "Reduced API response time by 50%",
+      ],
+    },
+    AdoyoClifford: {
+      position: "DevOps Engineer",
+      email: "adoyoclifford@example.com",
+      linkedin: "https://linkedin.com/in/adoyoclifford",
+      expertise: ["Docker", "Kubernetes", "AWS"],
+      yearsAtCompany: 1,
+      skills: [
+        { name: "Docker", level: 91 },
+        { name: "Kubernetes", level: 88 },
+        { name: "AWS", level: 86 },
+        { name: "CI/CD", level: 90 },
+      ],
+      contributions: [
+        "Set up automated deployment pipelines",
+        "Reduced infrastructure costs by 30%",
+        "Implemented monitoring and alerting systems",
+      ],
+    },
   };
 
   useEffect(() => {
@@ -32,32 +112,50 @@ function Team() {
         setLoading(true);
         const profilesData = await Promise.all(
           githubUsernames.map(async (username) => {
-            const response = await fetch(`https://api.github.com/users/${username}`);
-            if (!response.ok) throw new Error(`Failed to fetch ${username}`);
-            const data = await response.json();
+            try {
+              const response = await fetch(
+                `https://api.github.com/users/${username}`,
+              );
+              if (!response.ok) {
+                console.error(
+                  `Failed to fetch ${username}: ${response.status} ${response.statusText}`,
+                );
+                throw new Error(`Failed to fetch ${username}`);
+              }
+              const data = await response.json();
 
-            const reposResponse = await fetch(data.repos_url);
-            const repos = reposResponse.ok ? await reposResponse.json() : [];
-            const topRepos = repos
-              .sort((a, b) => b.stargazers_count - a.stargazers_count)
-              .slice(0, 2);
+              const reposResponse = await fetch(data.repos_url);
+              const repos = reposResponse.ok ? await reposResponse.json() : [];
+              const topRepos = repos
+                .sort((a, b) => b.stargazers_count - a.stargazers_count)
+                .slice(0, 2);
 
-            return {
-              username: data.login,
-              name: data.name || data.login,
-              role: data.bio || "Developer",
-              imageUrl: data.avatar_url,
-              github: data.html_url,
-              followers: data.followers,
-              following: data.following,
-              publicRepos: data.public_repos,
-              location: data.location || "Kenya",
-              topRepos,
-              ...memberDetails[username],
-            };
-          })
+              const profileData = {
+                username: data.login,
+                name: data.name || data.login,
+                bio:
+                  data.bio || memberDetails[username]?.position || "Developer",
+                imageUrl: data.avatar_url,
+                github: data.html_url,
+                followers: data.followers,
+                following: data.following,
+                publicRepos: data.public_repos,
+                location: data.location || "Kenya",
+                topRepos,
+                ...memberDetails[username],
+              };
+
+              console.log(`Fetched profile for ${username}:`, profileData);
+              return profileData;
+            } catch (error) {
+              console.error(`Error fetching ${username}:`, error);
+              throw error;
+            }
+          }),
         );
         setProfiles(profilesData);
+        console.log("All profiles data:", profilesData);
+
         if (profilesData.length > 0) setActiveMember(profilesData[0]);
       } catch (err) {
         setError(err.message);
@@ -113,7 +211,8 @@ function Team() {
             Meet Our Experts
           </h1>
           <p className="text-gray-400 text-lg max-w-2xl mx-auto">
-            A team of passionate professionals dedicated to delivering exceptional solutions
+            A team of passionate professionals dedicated to delivering
+            exceptional solutions
           </p>
         </div>
 
@@ -122,7 +221,9 @@ function Team() {
           {/* Sidebar */}
           <div className="lg:w-1/4">
             <div className="sticky top-8 space-y-6">
-              <h3 className="text-lg font-semibold text-cyan-400 mb-4">Team Members</h3>
+              <h3 className="text-lg font-semibold text-cyan-400 mb-4">
+                Team Members
+              </h3>
               <div className="space-y-4">
                 {profiles
                   .filter((p) => p.username !== activeMember?.username)
@@ -141,7 +242,9 @@ function Team() {
                       </div>
                       <div className="text-left flex-1">
                         <h4 className="font-semibold">{profile.name}</h4>
-                        <p className="text-sm text-gray-400 truncate">{profile.position}</p>
+                        <p className="text-sm text-gray-400 truncate">
+                          {profile.position}
+                        </p>
                         {profile.expertise?.length > 0 && (
                           <div className="flex items-center gap-2 mt-1">
                             <span className="text-xs px-2 py-1 bg-cyan-900 text-cyan-400 rounded">
@@ -167,7 +270,7 @@ function Team() {
                       <div className="w-32 h-32 rounded-full overflow-hidden border-4 border-gray-800 shadow-lg">
                         <img
                           src={activeMember.imageUrl}
-                          alt={activeMember.fullName}
+                          alt={activeMember.login}
                           className="w-full h-full object-cover"
                         />
                       </div>
@@ -176,8 +279,12 @@ function Team() {
                     <div className="flex-1">
                       <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
                         <div>
-                          <h2 className="text-3xl font-bold">{activeMember.fullName}</h2>
-                          <p className="text-xl text-cyan-400 font-semibold mt-1">{activeMember.position}</p>
+                          <h2 className="text-3xl font-bold">
+                            {activeMember.name}
+                          </h2>
+                          <p className="text-xl text-cyan-400 font-semibold mt-1">
+                            {activeMember.bio}
+                          </p>
                         </div>
                         <div className="flex gap-3">
                           {activeMember.github && (
@@ -215,19 +322,21 @@ function Team() {
                       <div className="flex flex-wrap gap-6 mt-6 text-gray-400">
                         {activeMember.location && (
                           <div className="flex items-center gap-2">
-                            <MapPin className="w-4 h-4" />
+                            <MapPinCheck className="w-4 h-4" />
                             <span>{activeMember.location}</span>
                           </div>
                         )}
                         {activeMember.yearsAtCompany && (
                           <div className="flex items-center gap-2">
-                            <Calendar className="w-4 h-4" />
-                            <span>{activeMember.yearsAtCompany} years at Nyota</span>
+                            <Calendar1 className="w-4 h-4" />
+                            <span>
+                              {activeMember.yearsAtCompany} years at Nyota
+                            </span>
                           </div>
                         )}
                         {activeMember.publicRepos && (
                           <div className="flex items-center gap-2">
-                            <Code className="w-4 h-4" />
+                            <Code2 className="w-4 h-4" />
                             <span>{activeMember.publicRepos} public repos</span>
                           </div>
                         )}
@@ -237,7 +346,10 @@ function Team() {
                       {activeMember.expertise?.length > 0 && (
                         <div className="flex flex-wrap gap-2 mt-6">
                           {activeMember.expertise.map((skill, index) => (
-                            <span key={index} className="px-3 py-1 bg-cyan-900 text-cyan-400 rounded-full text-sm font-medium">
+                            <span
+                              key={index}
+                              className="px-3 py-1 bg-cyan-900 text-cyan-400 rounded-full text-sm font-medium"
+                            >
                               {skill}
                             </span>
                           ))}
@@ -253,8 +365,12 @@ function Team() {
                     {/* Bio */}
                     {activeMember.bio && (
                       <div>
-                        <h3 className="text-xl font-semibold text-cyan-400 mb-4">About</h3>
-                        <p className="text-gray-300 leading-relaxed">{activeMember.bio}</p>
+                        <h3 className="text-xl font-semibold text-cyan-400 mb-4">
+                          About
+                        </h3>
+                        <p className="text-gray-300 leading-relaxed">
+                          {activeMember.bio}
+                        </p>
                       </div>
                     )}
 
@@ -278,56 +394,45 @@ function Team() {
 
                   {/* Right Column */}
                   <div className="space-y-8">
-                    {/* Skills */}
-                    {activeMember.skills?.length > 0 && (
-                      <div className="bg-gray-800 rounded-xl p-6">
-                        <h3 className="text-xl font-semibold text-cyan-400 mb-6">Skills</h3>
-                        <div className="space-y-5">
-                          {activeMember.skills.map((skill, index) => (
-                            <div key={index} className="space-y-2">
-                              <div className="flex justify-between">
-                                <span className="font-medium text-gray-300">{skill.name}</span>
-                                <span className="text-sm text-gray-400">{skill.level}%</span>
-                              </div>
-                              <div className="h-2 bg-gray-700 rounded-full overflow-hidden">
-                                <div
-                                  className="h-full bg-gradient-to-r from-cyan-400 to-blue-500 rounded-full"
-                                  style={{ width: `${skill.level}%` }}
-                                />
-                              </div>
-                            </div>
-                          ))}
-                        </div>
-                      </div>
-                    )}
-
                     {/* GitHub Stats */}
                     <div className="bg-gray-800 rounded-xl p-6">
-                      <h3 className="text-xl font-semibold text-cyan-400 mb-6">GitHub Stats</h3>
+                      <h3 className="text-xl font-semibold text-cyan-400 mb-6">
+                        GitHub Stats
+                      </h3>
                       <div className="grid grid-cols-2 gap-4">
                         <div className="text-center p-4 bg-gray-900 rounded-lg border border-gray-700">
-                          <p className="text-2xl font-bold">{activeMember.followers || 0}</p>
+                          <p className="text-2xl font-bold">
+                            {activeMember.followers || 0}
+                          </p>
                           <p className="text-sm text-gray-400">Followers</p>
                         </div>
                         <div className="text-center p-4 bg-gray-900 rounded-lg border border-gray-700">
-                          <p className="text-2xl font-bold">{activeMember.following || 0}</p>
+                          <p className="text-2xl font-bold">
+                            {activeMember.following || 0}
+                          </p>
                           <p className="text-sm text-gray-400">Following</p>
                         </div>
                         <div className="text-center p-4 bg-gray-900 rounded-lg border border-gray-700">
-                          <p className="text-2xl font-bold">{activeMember.publicRepos || 0}</p>
+                          <p className="text-2xl font-bold">
+                            {activeMember.publicRepos || 0}
+                          </p>
                           <p className="text-sm text-gray-400">Repositories</p>
                         </div>
                         <div className="text-center p-4 bg-gray-900 rounded-lg border border-gray-700">
-                          <p className="text-2xl font-bold">{activeMember.yearsAtCompany || 0}</p>
+                          <p className="text-2xl font-bold">
+                            {activeMember.yearsAtCompany || 0}
+                          </p>
                           <p className="text-sm text-gray-400">Years</p>
                         </div>
                       </div>
                     </div>
 
                     {/* Contact */}
-                    {(activeMember.email || activeMember.website) && (
+                    {/* {(activeMember.email || activeMember.website) && (
                       <div className="bg-gray-800 rounded-xl p-6">
-                        <h3 className="text-xl font-semibold text-cyan-400 mb-4">Contact</h3>
+                        <h3 className="text-xl font-semibold text-cyan-400 mb-4">
+                          Contact
+                        </h3>
                         <div className="space-y-3">
                           {activeMember.email && (
                             <a
@@ -351,7 +456,7 @@ function Team() {
                           )}
                         </div>
                       </div>
-                    )}
+                    )} */}
                   </div>
                 </div>
               </div>
@@ -361,7 +466,9 @@ function Team() {
 
         {/* Mobile */}
         <div className="mt-12 lg:hidden relative z-10">
-          <h3 className="text-xl font-semibold text-cyan-400 mb-6">Team Members</h3>
+          <h3 className="text-xl font-semibold text-cyan-400 mb-6">
+            Team Members
+          </h3>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             {profiles.map((profile) => (
               <button
