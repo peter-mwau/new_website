@@ -17,9 +17,9 @@ function Home() {
 
   const sections = {
     hero: { Component: Hero, Background: WebThreeRareBG },
-    services: { Component: Services, Background: VantaNetBG },
+    services: { Component: Services, Background: VantaDotsBG },
     projects: { Component: Projects, Background: VantaGlobeBG },
-    team: { Component: Team, Background: VantaDotsBG },
+    team: { Component: Team, Background: VantaNetBG },
     contacts: { Component: Contacts, Background: VantaBirdsBG },
   };
 

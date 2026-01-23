@@ -2,7 +2,7 @@
 import React, { useState, useRef, useEffect } from "react";
 import { motion } from "framer-motion";
 import { coder, cloud, ml, cyber, mobile, speed } from "../assets/images";
-import VantaNetBG from "../backgrounds/VantaNetBg";
+import VantaDotsBG from "../backgrounds/VantaDotsBg";
 import {
   Code2,
   Cloud,
@@ -229,13 +229,13 @@ const Services = () => {
 
       {/* Background */}
       <div className="absolute inset-0 z-0 pointer-events-none">
-        <VantaNetBG />
+        <VantaDotsBG />
       </div>
 
       {/* Floating Tech Stack Button */}
       <button
         onClick={() => setShowTechStack((v) => !v)}
-        className="fixed right-4 top-1/2 z-50 bg-cyan-500 hover:bg-cyan-400 text-black p-3 rounded-full shadow-lg"
+        className="fixed right-4 top-1/2 z-50 bg-blue-300 hover:bg-blue-400 text-black p-3 rounded-full shadow-lg"
         title="View Tech Stack"
       >
         <Terminal className="w-5 h-5" />
@@ -270,7 +270,7 @@ const Services = () => {
         <div className="grid grid-cols-2 sm:grid-cols-3 gap-4">
           {sidebarTechs.map((tech, i) => (
             <div key={i} className="glass rounded-lg p-3 text-center">
-              <div className="font-mono text-sm text-cyan-400">{tech.name}</div>
+              <div className="font-mono text-sm text-blue-400">{tech.name}</div>
               <div className="text-xs text-gray-400">{tech.category}</div>
             </div>
           ))}
@@ -334,12 +334,12 @@ const Services = () => {
                 />
               </div>
               <div className="p-6">
-                <div className="w-12 h-12 mb-4 flex items-center justify-center rounded-md bg-cyan-400/10">
-                  <service.icon className="w-6 h-6 text-cyan-400" />
+                <div className="w-12 h-12 mb-4 flex items-center justify-center rounded-md bg-blue-400/10">
+                  <service.icon className="w-6 h-6 text-blue-400" />
                 </div>
                 <h3 className="text-xl font-semibold mb-2">{service.title}</h3>
                 <p className="text-gray-300 text-sm">{service.description}</p>
-                <p className="text-sm text-cyan-400 mt-2 hover:text-cyan-300"> Learn More <ArrowRightFromLineIcon className="w-4 h-4 inline ml-1" /></p>
+                <p className="text-sm text-blue-400 mt-2 hover:text-blue-300"> Learn More <ArrowRightFromLineIcon className="w-4 h-4 inline ml-1" /></p>
               </div>
             </article>
           ))}
@@ -400,7 +400,7 @@ const Services = () => {
                   {selectedService.techStack.map((t, i) => (
                     <span
                       key={i}
-                      className="text-xs px-3 py-1 rounded-full bg-gray-800/60 border border-gray-700 text-cyan-300"
+                      className="text-xs px-3 py-1 rounded-full bg-gray-800/60 border border-gray-700 text-blue-300"
                     >
                       {t}
                     </span>
@@ -419,7 +419,7 @@ const Services = () => {
                       onNavigate("contacts");
                   }}
                   aria-label="Get in touch"
-                  className="px-4 py-2 rounded-md bg-cyan-500 text-black font-medium"
+                  className="px-4 py-2 rounded-md bg-blue-500 text-black font-medium"
                 >
                   Get in touch
                 </button>

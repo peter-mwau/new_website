@@ -10,7 +10,7 @@ import planetAssets from "../assets/solarData"; // expected to export array or o
 const THREE_CDN = "https://cdnjs.cloudflare.com/ajax/libs/three.js/r134/three.min.js";
 
 const DEFAULT_PRIMARY = 0x6fb3ff;
-const DEFAULT_SECONDARY = 0x95a9ff;
+const DEFAULT_SECONDARY = 0x95a9ff; 
 const DEFAULT_BG = 0x090c13;
 
 function loadScriptOnce(src) {

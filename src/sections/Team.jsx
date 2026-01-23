@@ -15,7 +15,8 @@ import {
   MapPinCheck,
 } from "lucide-react";
 import React, { useEffect, useState } from "react";
-import VantaDotsBG from "../backgrounds/VantaDotsBg";
+//import VantaDotsBG from "../backgrounds/VantaDotsBg";
+import VantaNetBG from "../backgrounds/VantaNetBg";
 
 function Team() {
   const [profiles, setProfiles] = useState([]);
@@ -199,7 +200,7 @@ function Team() {
 
   return (
     <div className="min-h-screen relative bg-black text-white overflow-hidden">
-      <VantaDotsBG />
+      <VantaNetBG />
 
       <div className="container mx-auto px-4 py-12">
         {/* Header */}
