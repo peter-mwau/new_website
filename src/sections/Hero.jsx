@@ -5,7 +5,7 @@ const Hero = ({ onNavigate }) => {
   console.log("Hero mounted — onNavigate is", typeof onNavigate);
 
   const items = [
-    { label: "HOME", section: "hero" },
+    // { label: "HOME", section: "hero" },
     { label: "SERVICES", section: "services" },
     { label: "PROJECTS", section: "projects" },
     { label: "TEAM", section: "team" },

@@ -14,7 +14,7 @@ function Navbar({ activeSection, setActiveSection }) {
   };
 
   return (
-    <nav className="relative z-50 px-8 py-5 bg-black/40 backdrop-blur-xl border-b border-white/10">
+    <nav className="relative z-50 px-8 py-10 backdrop-blur-sm border-white/10">
       <div className="max-w-7xl mx-auto flex justify-between items-center">
         {/* Logo */}
         <button
@@ -23,8 +23,8 @@ function Navbar({ activeSection, setActiveSection }) {
           className="flex gap-3 items-center text-white"
         >
           <img src="/vite.svg" alt="Logo" className="h-8" />
-          <span className="font-black text-xl bg-linear-to-r from-cyan-400 to-pink-400 bg-clip-text text-transparent">
-            Nyota Digital Labs
+          <span className="text-gray-100 text-xl bg-clip-text font-bold tracking-widest uppercase">
+            Novalorx Labs
           </span>
         </button>
 
@@ -35,10 +35,10 @@ function Navbar({ activeSection, setActiveSection }) {
               <button
                 type="button"
                 onClick={() => navigate(item.section)}
-                className={`text-sm transition ${
+                className={`text-lg font-normal uppercase tracking-widest transition ${
                   activeSection === item.section
                     ? "text-white"
-                    : "text-gray-300 hover:text-white"
+                    : "text-gray-500 hover:text-white"
                 }`}
               >
                 {item.label}
