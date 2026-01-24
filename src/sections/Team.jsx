@@ -107,6 +107,47 @@ function Team() {
     },
   };
 
+  const calculateYearsAndDaysSince = (dateString) => {
+    if (!dateString) return { years: 0, days: 0, label: "0 days" };
+
+    const start = new Date(dateString);
+    const now = new Date();
+
+    let years = now.getFullYear() - start.getFullYear();
+    const anniversaryThisYear = new Date(
+      now.getFullYear(),
+      start.getMonth(),
+      start.getDate(),
+    );
+
+    if (now < anniversaryThisYear) years -= 1;
+
+    const lastAnniversaryYear =
+      now < anniversaryThisYear ? now.getFullYear() - 1 : now.getFullYear();
+    const lastAnniversary = new Date(
+      lastAnniversaryYear,
+      start.getMonth(),
+      start.getDate(),
+    );
+
+    const msInDay = 1000 * 60 * 60 * 24;
+    const days = Math.max(0, Math.floor((now - lastAnniversary) / msInDay));
+
+    const labelParts = [];
+    if (years > 0) labelParts.push(`${years} yr${years === 1 ? "" : "s"}`);
+    labelParts.push(`${days} day${days === 1 ? "" : "s"}`);
+
+    return { years, days, label: labelParts.join(" ") };
+  };
+
+  const getYearsOnGithubLabel = (member) => {
+    if (!member) return "0 days";
+    if (member.createdAt)
+      return calculateYearsAndDaysSince(member.createdAt).label;
+    if (member.yearsOnGithub?.label) return member.yearsOnGithub.label;
+    return "0 days";
+  };
+
   useEffect(() => {
     const fetchGitHubProfiles = async () => {
       try {
@@ -141,6 +182,8 @@ function Team() {
                 followers: data.followers,
                 following: data.following,
                 publicRepos: data.public_repos,
+                createdAt: data.created_at,
+                yearsOnGithub: calculateYearsAndDaysSince(data.created_at),
                 location: data.location || "Kenya",
                 topRepos,
                 ...memberDetails[username],
@@ -420,10 +463,12 @@ function Team() {
                           <p className="text-sm text-gray-400">Repositories</p>
                         </div>
                         <div className="text-center p-4 bg-gray-900 rounded-lg border border-gray-700">
-                          <p className="text-2xl font-bold">
-                            {activeMember.yearsAtCompany || 0}
+                          <p className="text-sm font-semibold">
+                            {getYearsOnGithubLabel(activeMember)}
                           </p>
-                          <p className="text-sm text-gray-400">Years</p>
+                          {/* <p className="text-sm text-gray-400">
+                            Years on GitHub
+                          </p> */}
                         </div>
                       </div>
                     </div>
