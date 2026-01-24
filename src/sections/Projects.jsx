@@ -348,13 +348,13 @@ function Projects() {
       <div className="absolute bottom-0 left-0 right-0 h-48 bg-gradient-to-b from-transparent via-black/30 to-black/80 pointer-events-none blur-xl"></div>
 
       <div className="absolute inset-0 overflow-hidden">
-        <div className="absolute top-20 left-1/4 w-72 h-72 bg-gradient-to-r from-cyan-500/10 to-purple-500/10 rounded-full blur-3xl animate-pulse"></div>
+        <div className="absolute top-20 left-1/4 w-72 h-72 bg-gradient-to-r from-blue-500/10 to-purple-500/10 rounded-full blur-3xl animate-pulse"></div>
         <div className="absolute bottom-20 right-1/4 w-96 h-96 bg-gradient-to-l from-pink-500/10 to-blue-500/10 rounded-full blur-3xl animate-pulse delay-1000"></div>
       </div>
 
       <div className="relative z-10 max-w-6xl w-full px-4 md:px-6">
         {/* Header */}
-        <div className="relative text-center mb-12">
+        <div className="relative text-center mt-4 mb-30">
           <h2
             className="absolute inset-0 flex items-center justify-center text-7xl md:text-8xl lg:text-9xl
             font-extrabold text-white/10 uppercase tracking-widest pointer-events-none select-none"
@@ -374,7 +374,7 @@ function Projects() {
           <button
             onClick={() => scrollByPage("prev")}
             aria-label="Previous"
-            className="hidden md:flex items-center justify-center absolute left-0 top-1/2 -translate-y-1/2 z-20 w-10 h-10 rounded-full bg-gray-800/60 hover:bg-gray-800/80 ml-2"
+            className="hidden md:flex items-center justify-center absolute left-0 top-1/2 -translate-y-1/2 z-20 w-10 h-10 rounded-full bg-blue-400/40 hover:bg-blue-500/60 ml-2"
           >
             <ChevronLeft className="w-5 h-5 text-white" />
           </button>
@@ -436,7 +436,7 @@ function Projects() {
                   <div className="p-6 flex-1 flex flex-col justify-between">
                     <div>
                       <div className="flex justify-between items-start mb-3">
-                        <h3 className="text-xl font-bold text-white group-hover:text-cyan-300 transition-colors">
+                        <h3 className="text-xl font-bold text-white group-hover:text-blue-300 transition-colors">
                           {p.title}
                         </h3>
                         <span
@@ -491,7 +491,7 @@ function Projects() {
           <button
             onClick={() => scrollByPage("next")}
             aria-label="Next"
-            className="hidden md:flex items-center justify-center absolute right-0 top-1/2 -translate-y-1/2 z-20 w-10 h-10 rounded-full bg-gray-800/60 hover:bg-gray-800/80 mr-2"
+            className="hidden md:flex items-center justify-center absolute right-0 top-1/2 -translate-y-1/2 z-20 w-10 h-10 rounded-full bg-blue-400/40 hover:bg-blue-500/60 mr-2"
           >
             <ChevronRight className="w-5 h-5 text-white" />
           </button>
@@ -503,7 +503,7 @@ function Projects() {
                 key={i}
                 onClick={() => centerIndex(i)}
                 className={`w-2 h-2 rounded-full transition-all ${
-                  currentIndex === i ? "bg-cyan-400 scale-125" : "bg-white/30"
+                  currentIndex === i ? "bg-blue-400 scale-125" : "bg-white/30"
                 }`}
                 aria-label={`Go to project ${i + 1}`}
               />
