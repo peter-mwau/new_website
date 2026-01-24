@@ -249,7 +249,7 @@ const Services = () => {
         className="fixed top-0 right-0 h-full w-80 backdrop-blur-sm z-60 p-6 overflow-y-auto"
       >
         <div className="flex items-center justify-between mb-4">
-          <h3 className="text-2xl font-bold text-center gradient-text">
+          <h3 className="text-gray-500 text-2xl font-bold text-center gradient-text">
             Tech Stack
           </h3>
           <button
@@ -270,7 +270,7 @@ const Services = () => {
         <div className="grid grid-cols-2 sm:grid-cols-3 gap-4">
           {sidebarTechs.map((tech, i) => (
             <div key={i} className="glass rounded-lg p-3 text-center">
-              <div className="font-mono text-sm text-blue-400">{tech.name}</div>
+              <div className="font-mono text-sm text-blue-300">{tech.name}</div>
               <div className="text-xs text-gray-400">{tech.category}</div>
             </div>
           ))}
@@ -296,7 +296,7 @@ const Services = () => {
 
           {/* Foreground content */}
           <div className="relative z-10">
-            <h3 className="text-gray-400 text-3xl md:text-4xl mb-4 tracking-widest backdrop-blur-sm inline-block px-3 py-1 rounded-3xl bg-black/10">
+            <h3 className="text-gray-400 text-3xl md:text-4xl mb-4 tracking-widest backdrop-blur-sm inline-block px-3 py-1 rounded-3xl">
               Our Services
             </h3>
 
@@ -334,12 +334,12 @@ const Services = () => {
                 />
               </div>
               <div className="p-6">
-                <div className="w-12 h-12 mb-4 flex items-center justify-center rounded-md bg-blue-400/10">
-                  <service.icon className="w-6 h-6 text-blue-400" />
+                <div className="w-12 h-12 mt-4 mb-6 flex items-center justify-center rounded-md bg-blue-300/10">
+                  <service.icon className="w-7 h-7 text-blue-300" />
                 </div>
                 <h3 className="text-xl font-semibold mb-2">{service.title}</h3>
                 <p className="text-gray-300 text-sm">{service.description}</p>
-                <p className="text-sm text-blue-400 mt-2 hover:text-blue-300"> Learn More <ArrowRightFromLineIcon className="w-4 h-4 inline ml-1" /></p>
+                <p className="text-sm text-blue-300 mt-4 hover:text-blue-300"> Learn More <ArrowRightFromLineIcon className="w-4 h-4 inline ml-1" /></p>
               </div>
             </article>
           ))}

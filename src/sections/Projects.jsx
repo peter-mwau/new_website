@@ -1,5 +1,5 @@
 // src/sections/Projects.jsx
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import {
   X,
   ChevronLeft,
@@ -127,7 +127,50 @@ const sampleProjects = [
     tech: ["React", "D3.js", "WebSocket", "Node.js", "PostgreSQL", "Chart.js"],
     timeline: "4 months",
     team: "2 Developers + 1 Designer",
-    status: "In Development",
+    status: "Development",
+    link: "https://analytics-demo.example.com",
+    github: "https://github.com/example/dashboard",
+    challenges: [
+      "Handling real-time data synchronization",
+      "Creating responsive, interactive visualizations",
+      "Managing large data sets efficiently",
+    ],
+    solutions: [
+      "Implemented WebSocket for real-time updates",
+      "Used D3.js for custom chart interactions",
+      "Applied virtualization for large data rendering",
+    ],
+  },
+    {
+    id: 4,
+    title: "Machine Learning Model",
+    category: "AI/ML",
+    short: "Predictive model for customer churn using Python and scikit-learn.",
+    description:
+      "A machine learning model that predicts customer churn based on historical data and user behavior patterns.",
+    longDescription:
+      "This project involved developing a predictive model to identify customers at risk of churning. Using Python and scikit-learn, we processed large datasets, engineered relevant features, and trained various classification algorithms. The final model achieved high accuracy and was integrated into the company's CRM system to proactively address customer retention.",
+    screenshots: [
+      "https://images.unsplash.com/photo-1518770660439-4636190af475?w=1200&q=80&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1505852679233-d9fd70aff56d?w=1200&q=80&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=1200&q=80&auto=format",
+      "https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=1200&q=80&auto=format",
+    ],
+    details: [
+      "Data preprocessing and cleaning with Pandas",
+      "Feature engineering to improve model accuracy",
+      "Trained multiple classification algorithms (Logistic Regression, Random Forest, SVM)",
+      "Deep learning model using TensorFlow and Keras",
+      "Model evaluation using cross-validation and ROC-AUC",
+      "Integrated model into CRM for real-time predictions",
+      "Created visualizations with Matplotlib and Seaborn",
+      "Automated retraining pipeline with Airflow",
+      "Comprehensive documentation and reporting",
+    ],
+    tech: ["Python", "scikit-learn", "Pandas", "Matplotlib", "Seaborn", "Airflow"],
+    timeline: "1 week",
+    team: "1 Data Scientist",
+    status: "Completed",
     link: "https://analytics-demo.example.com",
     github: "https://github.com/example/dashboard",
     challenges: [
@@ -143,10 +186,18 @@ const sampleProjects = [
   },
 ];
 
+// --- (Use the same sampleProjects array as in your original file) ---
+// For the replacement file paste the exact sampleProjects content you already have.
+
 function Projects() {
   const [activeId, setActiveId] = useState(null);
   const [shotIdx, setShotIdx] = useState(0);
   const [isAnimating, setIsAnimating] = useState(false);
+
+  // Carousel state
+  const carouselRef = useRef(null);
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const [visibleCount, setVisibleCount] = useState(3); // adjust by breakpoint
 
   const openProject = (id) => {
     setIsAnimating(true);
@@ -175,7 +226,7 @@ function Projects() {
   const prevShot = () => {
     if (!active) return;
     setShotIdx(
-      (s) => (s - 1 + active.screenshots.length) % active.screenshots.length,
+      (s) => (s - 1 + active.screenshots.length) % active.screenshots.length
     );
   };
 
@@ -222,6 +273,68 @@ function Projects() {
 
   const [sectionRef, isInView, blur] = useInView();
 
+  // Update visibleCount on resize (for responsive cards per view)
+  useEffect(() => {
+    const update = () => {
+      const w = window.innerWidth;
+      if (w < 768) setVisibleCount(1);
+      else if (w < 1024) setVisibleCount(2);
+      else setVisibleCount(3);
+    };
+    update();
+    window.addEventListener("resize", update);
+    return () => window.removeEventListener("resize", update);
+  }, []);
+
+  // On scroll, update currentIndex for indicators
+  useEffect(() => {
+    const el = carouselRef.current;
+    if (!el) return;
+
+    const onScroll = () => {
+      // find the item nearest to center
+      const children = Array.from(el.children);
+      const center = el.scrollLeft + el.clientWidth / 2;
+      let nearestIdx = 0;
+      let nearestDist = Infinity;
+      children.forEach((child, idx) => {
+        const rect = child.getBoundingClientRect();
+        const childCenter = child.offsetLeft + child.offsetWidth / 2;
+        const dist = Math.abs(childCenter - center);
+        if (dist < nearestDist) {
+          nearestIdx = idx;
+          nearestDist = dist;
+        }
+      });
+      setCurrentIndex(nearestIdx);
+    };
+
+    el.addEventListener("scroll", onScroll, { passive: true });
+    // run once to set initial index
+    onScroll();
+    return () => el.removeEventListener("scroll", onScroll);
+  }, []);
+
+  // Carousel controls: scroll by one page (container width)
+  const scrollByPage = (direction = "next") => {
+    const el = carouselRef.current;
+    if (!el) return;
+    const page = el.clientWidth * 0.9; // scroll almost one visible page
+    const left = direction === "next" ? el.scrollLeft + page : el.scrollLeft - page;
+    el.scrollTo({ left, behavior: "smooth" });
+  };
+
+  // Optional: click indicator to center a card
+  const centerIndex = (idx) => {
+    const el = carouselRef.current;
+    if (!el) return;
+    const child = el.children[idx];
+    if (!child) return;
+    // center child
+    const left = child.offsetLeft - (el.clientWidth - child.offsetWidth) / 2;
+    el.scrollTo({ left, behavior: "smooth" });
+  };
+
   return (
     <div
       ref={sectionRef}
@@ -230,142 +343,196 @@ function Projects() {
       }`}
     >
       <VantaGlobeBG />
-      {/* Enhanced Background Overlay */}
       <div className="absolute inset-0"></div>
 
-      {/* Bottom Gradient Blur Transition */}
       <div className="absolute bottom-0 left-0 right-0 h-48 bg-gradient-to-b from-transparent via-black/30 to-black/80 pointer-events-none blur-xl"></div>
 
-      {/* Animated Background Elements */}
       <div className="absolute inset-0 overflow-hidden">
         <div className="absolute top-20 left-1/4 w-72 h-72 bg-gradient-to-r from-cyan-500/10 to-purple-500/10 rounded-full blur-3xl animate-pulse"></div>
         <div className="absolute bottom-20 right-1/4 w-96 h-96 bg-gradient-to-l from-pink-500/10 to-blue-500/10 rounded-full blur-3xl animate-pulse delay-1000"></div>
       </div>
 
       <div className="relative z-10 max-w-6xl w-full px-4 md:px-6">
-        {/* Section Header */}
-        <div className="text-center mb-12">
-          <div className="inline-block mb-4 px-5 py-2 rounded-full backdrop-blur-xl bg-white/10 border border-white/20">
-            <span className="text-sm font-semibold text-transparent bg-gradient-to-r from-cyan-300 via-purple-300 to-pink-300 bg-clip-text">
-              ✨ Featured Work
-            </span>
-          </div>
-          <h2 className="text-4xl md:text-5xl font-black mb-4">
-            <span className="text-white">Our </span>
-            <span className="text-transparent bg-gradient-to-r from-cyan-400 via-purple-400 to-pink-400 bg-clip-text">
-              Projects
-            </span>
+        {/* Header */}
+        <div className="relative text-center mb-12">
+          <h2
+            className="absolute inset-0 flex items-center justify-center text-7xl md:text-8xl lg:text-9xl
+            font-extrabold text-white/10 uppercase tracking-widest pointer-events-none select-none"
+          >
+            Projects
           </h2>
-          <p className="text-lg text-white/80 max-w-2xl mx-auto">
-            Explore our portfolio of innovative solutions across various
-            technologies and industries
-          </p>
+          <div className="relative z-10">
+            <h3 className="text-gray-400 text-3xl md:text-4xl mb-4 tracking-widest backdrop-blur-sm inline-block px-3 py-1 rounded-3xl">
+              Our Featured Work
+            </h3>
+          </div>
         </div>
 
-        {/* Projects Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-16">
-          {sampleProjects.map((p, idx) => (
-            <div
-              key={p.id}
-              onClick={() => openProject(p.id)}
-              className="group relative overflow-hidden rounded-2xl backdrop-blur-xl bg-gradient-to-br from-white/10 to-white/5 border border-white/20 cursor-pointer transition-all duration-500 hover:scale-[1.02] hover:border-white/40 animate-fadeIn"
-              style={{
-                animationDelay: `${idx * 150}ms`,
-                animationDuration: "0.6s",
-              }}
-            >
-              {/* Animated Border Effect */}
-              <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-1000"></div>
+        {/* Carousel wrapper + arrows */}
+        <div className="relative">
+          {/* Left Arrow */}
+          <button
+            onClick={() => scrollByPage("prev")}
+            aria-label="Previous"
+            className="hidden md:flex items-center justify-center absolute left-0 top-1/2 -translate-y-1/2 z-20 w-10 h-10 rounded-full bg-gray-800/60 hover:bg-gray-800/80 ml-2"
+          >
+            <ChevronLeft className="w-5 h-5 text-white" />
+          </button>
 
-              {/* Project Image */}
-              <div className="relative h-48 overflow-hidden">
-                <img
-                  src={p.screenshots[0]}
-                  alt={p.title}
-                  className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
-                <div className="absolute top-4 left-4 px-3 py-1 rounded-full backdrop-blur-md bg-white/10 border border-white/20">
-                  <span className="text-xs font-medium text-white">
-                    {p.category}
-                  </span>
+          {/* Carousel */}
+          <div
+            ref={carouselRef}
+            className="w-full overflow-x-auto scroll-smooth no-scrollbar pb-6"
+            style={{
+              WebkitOverflowScrolling: "touch",
+              scrollSnapType: "x mandatory",
+              display: "flex",
+              gap: "1.25rem", // same as tailwind gap-6
+            }}
+          >
+            {sampleProjects.map((p, idx) => (
+              <div
+                key={p.id}
+                onClick={() => openProject(p.id)}
+                role="button"
+                tabIndex={0}
+                onKeyDown={(e) => {
+                  if (e.key === "Enter" || e.key === " ") openProject(p.id);
+                }}
+                className="snap-start flex-shrink-0"
+                style={{
+                  width:
+                    visibleCount === 1
+                      ? "100%"
+                      : visibleCount === 2
+                      ? "48%"
+                      : "31%", // ~3 per view with gaps
+                }}
+              >
+                <div
+                  className="group relative overflow-hidden rounded-2xl backdrop-blur-xl bg-gradient-to-br from-white/10 to-white/5 border border-white/20 cursor-pointer transition-all duration-500 hover:scale-[1.02] hover:border-white/40"
+                  style={{
+                    height: "100%",
+                    display: "flex",
+                    flexDirection: "column",
+                  }}
+                >
+                  <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-1000"></div>
+
+                  <div className="relative h-48 overflow-hidden rounded-t-2xl">
+                    <img
+                      src={p.screenshots[0]}
+                      alt={p.title}
+                      className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
+                    <div className="absolute top-4 left-4 px-3 py-1 rounded-full backdrop-blur-md bg-white/10 border border-white/20">
+                      <span className="text-xs font-medium text-white">
+                        {p.category}
+                      </span>
+                    </div>
+                  </div>
+
+                  <div className="p-6 flex-1 flex flex-col justify-between">
+                    <div>
+                      <div className="flex justify-between items-start mb-3">
+                        <h3 className="text-xl font-bold text-white group-hover:text-cyan-300 transition-colors">
+                          {p.title}
+                        </h3>
+                        <span
+                          className={`text-xs px-2 py-1 rounded-full ${
+                            p.status === "Live"
+                              ? "bg-green-500/20 text-green-300"
+                              : p.status === "Completed"
+                              ? "bg-blue-500/20 text-blue-300"
+                              : "bg-yellow-500/20 text-yellow-300"
+                          }`}
+                        >
+                          {p.status}
+                        </span>
+                      </div>
+
+                      <p className="text-sm text-white/70 mb-4">{p.short}</p>
+
+                      <div className="flex flex-wrap gap-2 mb-4">
+                        {p.tech.slice(0, 3).map((t) => (
+                          <span
+                            key={t}
+                            className="text-xs px-2 py-1 rounded-full backdrop-blur-md bg-white/5 border border-white/10 text-white/80"
+                          >
+                            {t}
+                          </span>
+                        ))}
+                        {p.tech.length > 3 && (
+                          <span className="text-xs px-2 py-1 rounded-full backdrop-blur-md bg-white/5 border border-white/10 text-white/60">
+                            +{p.tech.length - 3} more
+                          </span>
+                        )}
+                      </div>
+                    </div>
+
+                    <div className="flex items-center justify-between text-sm text-white/60">
+                      <div className="flex items-center gap-1">
+                        <Calendar className="w-4 h-4" />
+                        <span>{p.timeline}</span>
+                      </div>
+                      <div className="flex items-center gap-1">
+                        <Users className="w-4 h-4" />
+                        <span>{p.team}</span>
+                      </div>
+                    </div>
+                  </div>
                 </div>
               </div>
+            ))}
+          </div>
 
-              {/* Project Content */}
-              <div className="p-6">
-                <div className="flex justify-between items-start mb-3">
-                  <h3 className="text-xl font-bold text-white group-hover:text-cyan-300 transition-colors">
-                    {p.title}
-                  </h3>
-                  <span
-                    className={`text-xs px-2 py-1 rounded-full ${p.status === "Live" ? "bg-green-500/20 text-green-300" : p.status === "Completed" ? "bg-blue-500/20 text-blue-300" : "bg-yellow-500/20 text-yellow-300"}`}
-                  >
-                    {p.status}
-                  </span>
-                </div>
+          {/* Right Arrow */}
+          <button
+            onClick={() => scrollByPage("next")}
+            aria-label="Next"
+            className="hidden md:flex items-center justify-center absolute right-0 top-1/2 -translate-y-1/2 z-20 w-10 h-10 rounded-full bg-gray-800/60 hover:bg-gray-800/80 mr-2"
+          >
+            <ChevronRight className="w-5 h-5 text-white" />
+          </button>
 
-                <p className="text-sm text-white/70 mb-4">{p.short}</p>
-
-                {/* Technologies */}
-                <div className="flex flex-wrap gap-2 mb-4">
-                  {p.tech.slice(0, 3).map((t) => (
-                    <span
-                      key={t}
-                      className="text-xs px-2 py-1 rounded-full backdrop-blur-md bg-white/5 border border-white/10 text-white/80"
-                    >
-                      {t}
-                    </span>
-                  ))}
-                  {p.tech.length > 3 && (
-                    <span className="text-xs px-2 py-1 rounded-full backdrop-blur-md bg-white/5 border border-white/10 text-white/60">
-                      +{p.tech.length - 3} more
-                    </span>
-                  )}
-                </div>
-
-                {/* Stats */}
-                <div className="flex items-center justify-between text-sm text-white/60">
-                  <div className="flex items-center gap-1">
-                    <Calendar className="w-4 h-4" />
-                    <span>{p.timeline}</span>
-                  </div>
-                  <div className="flex items-center gap-1">
-                    <Users className="w-4 h-4" />
-                    <span>{p.team}</span>
-                  </div>
-                </div>
-              </div>
-            </div>
-          ))}
+          {/* Dots (desktop) */}
+          <div className="hidden md:flex items-center justify-center gap-2 mt-4">
+            {sampleProjects.map((_, i) => (
+              <button
+                key={i}
+                onClick={() => centerIndex(i)}
+                className={`w-2 h-2 rounded-full transition-all ${
+                  currentIndex === i ? "bg-cyan-400 scale-125" : "bg-white/30"
+                }`}
+                aria-label={`Go to project ${i + 1}`}
+              />
+            ))}
+          </div>
         </div>
 
         {/* Project Detail Modal */}
         {active && (
           <div
-            className={`fixed inset-0 z-50 flex items-center justify-center p-4 ${isAnimating ? "animate-fadeIn" : ""}`}
+            className={`fixed inset-0 z-50 flex items-center justify-center p-4 ${isAnimating ? "animate-fadeIn" : ""
+              }`}
           >
-            {/* Backdrop */}
             <div
-              className="absolute inset-0 bg-black/70 backdrop-blur-md transition-opacity duration-300"
+              className="absolute inset-0 bg-black/40 backdrop-blur-md transition-opacity duration-300"
               onClick={closeProject}
             ></div>
 
-            {/* Modal Content */}
             <div className="relative w-full max-w-6xl max-h-[90vh] overflow-hidden  shadow-2xl transform transition-all duration-300">
-              {/* Close Button */}
               <button
                 onClick={closeProject}
-                className="absolute top-6 right-6 z-50 p-3 rounded-full backdrop-blur-md bg-white/10 border border-white/20 text-white hover:bg-white/20 hover:border-white/40 transition-all duration-300 hover:scale-110"
+                className="absolute top-6 right-15 z-50 p-3 rounded-full backdrop-blur-md bg-white/10 border border-white/20 text-white hover:bg-white/20 hover:border-white/40 transition-all duration-300 hover:scale-110"
               >
                 <X className="w-5 h-5" />
               </button>
 
-              {/* Content Grid */}
               <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 p-6 md:p-8">
                 {/* Left Column - Images */}
                 <div className="space-y-6">
-                  {/* Main Image */}
                   <div className="relative h-64 md:h-80 rounded-2xl overflow-hidden">
                     <img
                       src={active.screenshots[shotIdx]}
@@ -374,7 +541,6 @@ function Projects() {
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent"></div>
 
-                    {/* Navigation Arrows */}
                     <button
                       onClick={prevShot}
                       className="absolute left-4 top-1/2 -translate-y-1/2 p-3 rounded-full backdrop-blur-md bg-white/10 border border-white/20 text-white hover:bg-white/20 transition-all"
@@ -388,7 +554,6 @@ function Projects() {
                       <ChevronRight className="w-5 h-5" />
                     </button>
 
-                    {/* Image Counter */}
                     <div className="absolute bottom-4 left-1/2 -translate-x-1/2 px-3 py-1 rounded-full backdrop-blur-md bg-black/50 border border-white/20">
                       <span className="text-white text-sm">
                         {shotIdx + 1} / {active.screenshots.length}
@@ -396,17 +561,13 @@ function Projects() {
                     </div>
                   </div>
 
-                  {/* Thumbnails */}
                   <div className="grid grid-cols-4 gap-3">
                     {active.screenshots.map((img, index) => (
                       <button
                         key={index}
                         onClick={() => setShotIdx(index)}
-                        className={`relative h-20 rounded-xl overflow-hidden transition-all duration-300 ${
-                          shotIdx === index
-                            ? "ring-2 ring-cyan-400 scale-105"
-                            : "opacity-70 hover:opacity-100 hover:scale-105"
-                        }`}
+                        className={`relative h-20 rounded-xl overflow-hidden transition-all duration-300 ${shotIdx === index ? "ring-2 ring-blue-400 scale-105" : "opacity-70 hover:opacity-100 hover:scale-105"
+                          }`}
                       >
                         <img
                           src={img}
@@ -417,24 +578,23 @@ function Projects() {
                     ))}
                   </div>
 
-                  {/* Quick Stats */}
-                  <div className="grid grid-cols-3 gap-4">
-                    <div className="text-center p-4 rounded-xl backdrop-blur-md bg-white/5 border border-white/10">
-                      <Calendar className="w-5 h-5 text-cyan-400 mx-auto mb-2" />
+                  <div className="grid grid-cols-3 gap-4 mt-15">
+                    <div className="text-center p-4 rounded-xl backdrop-blur-md bg-white/5 border border-blue-300/20">
+                      <Calendar className="w-5 h-5 text-blue-300 mx-auto mb-2" />
                       <p className="text-xs text-white/60">Timeline</p>
                       <p className="text-sm font-semibold text-white">
                         {active.timeline}
                       </p>
                     </div>
-                    <div className="text-center p-4 rounded-xl backdrop-blur-md bg-white/5 border border-white/10">
-                      <Users className="w-5 h-5 text-purple-400 mx-auto mb-2" />
+                    <div className="text-center p-4 rounded-xl backdrop-blur-md bg-white/5 border border-blue-300/20">
+                      <Users className="w-5 h-5 text-blue-300 mx-auto mb-2" />
                       <p className="text-xs text-white/60">Team</p>
                       <p className="text-sm font-semibold text-white">
                         {active.team}
                       </p>
                     </div>
-                    <div className="text-center p-4 rounded-xl backdrop-blur-md bg-white/5 border border-white/10">
-                      <Code className="w-5 h-5 text-pink-400 mx-auto mb-2" />
+                    <div className="text-center p-4 rounded-xl backdrop-blur-md bg-white/5 border border-blue-300/20">
+                      <Code className="w-5 h-5 text-blue-300 mx-auto mb-2" />
                       <p className="text-xs text-white/60">Status</p>
                       <p className="text-sm font-semibold text-white">
                         {active.status}
@@ -443,8 +603,9 @@ function Projects() {
                   </div>
                 </div>
 
-                {/* Right Column - Details */}
-                <div className="overflow-y-auto max-h-[calc(90vh-4rem)] pr-2">
+                {/* Right Column - Details (unchanged) */}
+                <div className="overflow-y-auto max-h-[calc(70vh-4rem)] pr-2">
+                  {/* ... the rest of your details remain unchanged - copy from original file */}
                   {/* Header */}
                   <div className="mb-6">
                     <div className="flex items-center gap-3 mb-3">
@@ -456,34 +617,34 @@ function Projects() {
                           active.status === "Live"
                             ? "bg-green-500/20 text-green-300"
                             : active.status === "Completed"
-                              ? "bg-blue-500/20 text-blue-300"
-                              : "bg-yellow-500/20 text-yellow-300"
+                            ? "bg-blue-500/20 text-blue-300"
+                            : "bg-yellow-500/20 text-yellow-300"
                         }`}
                       >
                         {active.status}
                       </span>
                     </div>
-                    <h3 className="text-2xl md:text-3xl font-bold text-white mb-3">
+                    <h3 className="text-2xl md:text-3xl font-bold text-gray-300 mb-3">
                       {active.title}
                     </h3>
-                    <p className="text-white/80 text-lg mb-4">
+                    <p className="text-white/80 text-md mb-4">
                       {active.description}
                     </p>
                   </div>
 
                   {/* Detailed Description */}
-                  <div className="mb-6">
+                  <div className="mb-8">
                     <h4 className="text-xl font-semibold text-white mb-3 flex items-center gap-2">
-                      <div className="w-2 h-2 rounded-full bg-gradient-to-r from-cyan-500 to-purple-500"></div>
+                      <div className="w-2 h-2 rounded-full bg-blue-300"></div>
                       Project Overview
                     </h4>
-                    <p className="text-white/70">{active.longDescription}</p>
+                    <p className="text-md text-white/80">{active.longDescription}</p>
                   </div>
 
                   {/* Key Features */}
-                  <div className="mb-6">
+                  <div className="mb-8">
                     <h4 className="text-xl font-semibold text-white mb-3 flex items-center gap-2">
-                      <div className="w-2 h-2 rounded-full bg-gradient-to-r from-purple-500 to-pink-500"></div>
+                      <div className="w-2 h-2 rounded-full bg-blue-300"></div>
                       Key Features
                     </h4>
                     <ul className="space-y-2">
@@ -492,7 +653,7 @@ function Projects() {
                           key={index}
                           className="flex items-start gap-3 text-white/80"
                         >
-                          <div className="w-1.5 h-1.5 rounded-full bg-gradient-to-r from-cyan-400 to-blue-400 mt-2"></div>
+                          <div className="w-1.5 h-1.5 rounded-full bg-gray-400 mt-2"></div>
                           <span>{detail}</span>
                         </li>
                       ))}
@@ -500,9 +661,9 @@ function Projects() {
                   </div>
 
                   {/* Technologies */}
-                  <div className="mb-6">
+                  <div className="mb-8">
                     <h4 className="text-xl font-semibold text-white mb-3 flex items-center gap-2">
-                      <div className="w-2 h-2 rounded-full bg-gradient-to-r from-pink-500 to-cyan-500"></div>
+                      <div className="w-2 h-2 rounded-full bg-blue-300"></div>
                       Technologies Used
                     </h4>
                     <div className="flex flex-wrap gap-2">
@@ -567,7 +728,6 @@ function Projects() {
                     </a>
                   </div>
 
-                  {/* Project Navigation */}
                   <div className="flex justify-between items-center mt-8 pt-6 border-t border-white/10">
                     <button
                       onClick={prevProject}
@@ -585,13 +745,14 @@ function Projects() {
                     </button>
                   </div>
                 </div>
+                {/* End Right Column */}
               </div>
             </div>
           </div>
         )}
       </div>
 
-      {/* Custom Animations */}
+      {/* Animations */}
       <style jsx>{`
         @keyframes fadeIn {
           from {
@@ -606,6 +767,15 @@ function Projects() {
 
         .animate-fadeIn {
           animation: fadeIn 0.3s ease-out;
+        }
+
+        /* Hide native scrollbar but keep touch support */
+        .no-scrollbar::-webkit-scrollbar {
+          display: none;
+        }
+        .no-scrollbar {
+          -ms-overflow-style: none;
+          scrollbar-width: none;
         }
       `}</style>
     </div>
