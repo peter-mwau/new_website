@@ -1,3 +1,5 @@
+// src/sections/Team.jsx
+
 import {
   Github,
   Linkedin,
@@ -218,7 +220,7 @@ function Team() {
     return (
       <div className="min-h-screen flex items-center justify-center bg-black text-white">
         <div className="text-center">
-          <div className="w-12 h-12 border-4 border-gray-700 border-t-cyan-400 rounded-full animate-spin mx-auto"></div>
+          <div className="w-12 h-12 border-4 border-gray-700 border-t-blue-400 rounded-full animate-spin mx-auto"></div>
           <p className="mt-4 text-gray-400">Loading team members...</p>
         </div>
       </div>
@@ -242,22 +244,23 @@ function Team() {
     );
 
   return (
-    <div className="min-h-screen relative bg-black text-white overflow-hidden">
+    <div className="max-h-[calc(90vh-4rem)] relative bg-black text-white overflow-y-auto">
       <VantaNetBG />
 
       <div className="container mx-auto px-4 py-12">
         {/* Header */}
-        <div className="text-center mb-12 relative z-10">
-          <div className="inline-flex items-center gap-2 mb-4 px-4 py-2 bg-cyan-900 rounded-full">
-            <span className="text-sm font-medium text-cyan-400">Our Team</span>
+        <div className="relative text-center mt-4 mb-30">
+          <h2
+            className="absolute inset-0 flex items-center justify-center text-7xl md:text-8xl lg:text-9xl
+            font-extrabold text-white/10 uppercase tracking-widest pointer-events-none select-none"
+          >
+            Professionals
+          </h2>
+          <div className="relative z-10">
+            <h3 className="text-gray-400 text-3xl md:text-4xl mb-4 tracking-widest backdrop-blur-sm inline-block px-3 py-1 rounded-3xl">
+              Our Experts
+            </h3>
           </div>
-          <h1 className="text-4xl md:text-5xl font-bold mb-4 gradient-text bg-gradient-to-r from-cyan-400 via-purple-400 to-pink-400 bg-clip-text text-transparent">
-            Meet Our Experts
-          </h1>
-          <p className="text-gray-400 text-lg max-w-2xl mx-auto">
-            A team of passionate professionals dedicated to delivering
-            exceptional solutions
-          </p>
         </div>
 
         {/* Layout */}
@@ -265,7 +268,7 @@ function Team() {
           {/* Sidebar */}
           <div className="lg:w-1/4">
             <div className="sticky top-8 space-y-6">
-              <h3 className="text-lg font-semibold text-cyan-400 mb-4">
+              <h3 className="text-lg font-semibold text-blue-300 mb-4">
                 Team Members
               </h3>
               <div className="space-y-4">
@@ -275,7 +278,7 @@ function Team() {
                     <button
                       key={profile.username}
                       onClick={() => selectMember(profile)}
-                      className="w-full flex items-center gap-4 p-4 bg-gray-900 rounded-xl shadow-lg border border-gray-700 hover:border-cyan-400 transition-all"
+                      className="w-full flex items-center gap-4 p-4 bg-gray-900/50 rounded-xl shadow-lg border border-gray-700 hover:border-blue-400 transition-all"
                     >
                       <div className="w-14 h-14 rounded-full overflow-hidden border-2 border-gray-700">
                         <img
@@ -291,7 +294,7 @@ function Team() {
                         </p>
                         {profile.expertise?.length > 0 && (
                           <div className="flex items-center gap-2 mt-1">
-                            <span className="text-xs px-2 py-1 bg-cyan-900 text-cyan-400 rounded">
+                            <span className="text-xs px-2 py-1 bg-blue-300/10 text-blue-400 rounded">
                               {profile.expertise[0]}
                             </span>
                           </div>
@@ -306,9 +309,9 @@ function Team() {
           {/* Active Member */}
           <div className="lg:w-3/4">
             {activeMember && (
-              <div className="bg-gray-900/70 backdrop-blur-md rounded-2xl shadow-xl overflow-hidden border border-gray-700">
+              <div className="bg-gray-900/70 backdrop-blur-md rounded-2xl shadow-xl border border-gray-700 max-h-[80vh] flex flex-col">
                 {/* Header */}
-                <div className="p-8 border-b border-gray-700">
+                <div className="p-8 border-b border-gray-700 shrink-0">
                   <div className="flex flex-col md:flex-row gap-8 items-start">
                     <div className="flex-shrink-0">
                       <div className="w-32 h-32 rounded-full overflow-hidden border-4 border-gray-800 shadow-lg">
@@ -322,11 +325,11 @@ function Team() {
 
                     <div className="flex-1">
                       <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
-                        <div>
+                        <div className="mt-8">
                           <h2 className="text-3xl font-bold">
                             {activeMember.name}
                           </h2>
-                          <p className="text-xl text-cyan-400 font-semibold mt-1">
+                          <p className="text-xl text-blue-300 font-semibold mt-1">
                             {activeMember.bio}
                           </p>
                         </div>
@@ -338,7 +341,7 @@ function Team() {
                               rel="noopener noreferrer"
                               className="p-2 bg-gray-800 rounded-lg hover:bg-gray-700 transition-colors"
                             >
-                              <Github className="w-5 h-5 text-cyan-400" />
+                              <Github className="w-5 h-5 text-blue-300" />
                             </a>
                           )}
                           {activeMember.linkedin && (
@@ -348,7 +351,7 @@ function Team() {
                               rel="noopener noreferrer"
                               className="p-2 bg-gray-800 rounded-lg hover:bg-gray-700 transition-colors"
                             >
-                              <Linkedin className="w-5 h-5 text-cyan-400" />
+                              <Linkedin className="w-5 h-5 text-blue-300" />
                             </a>
                           )}
                           {activeMember.email && (
@@ -356,7 +359,7 @@ function Team() {
                               href={`mailto:${activeMember.email}`}
                               className="p-2 bg-gray-800 rounded-lg hover:bg-gray-700 transition-colors"
                             >
-                              <Mail className="w-5 h-5 text-cyan-400" />
+                              <Mail className="w-5 h-5 text-blue-300" />
                             </a>
                           )}
                         </div>
@@ -392,7 +395,7 @@ function Team() {
                           {activeMember.expertise.map((skill, index) => (
                             <span
                               key={index}
-                              className="px-3 py-1 bg-cyan-900 text-cyan-400 rounded-full text-sm font-medium"
+                              className="px-3 py-1 bg-blue-300/20 text-blue-400 rounded-full text-sm font-medium"
                             >
                               {skill}
                             </span>
@@ -404,12 +407,12 @@ function Team() {
                 </div>
 
                 {/* Content */}
-                <div className="p-8 grid grid-cols-1 lg:grid-cols-3 gap-8">
+                <div className="p-8 grid grid-cols-1 lg:grid-cols-3 gap-8 overflow-y-auto max-h-[600px]">
                   <div className="lg:col-span-2 space-y-8">
                     {/* Bio */}
                     {activeMember.bio && (
                       <div>
-                        <h3 className="text-xl font-semibold text-cyan-400 mb-4">
+                        <h3 className="text-xl font-semibold text-blue-300 mb-4">
                           About
                         </h3>
                         <p className="text-gray-300 leading-relaxed">
@@ -421,13 +424,13 @@ function Team() {
                     {/* Key Contributions */}
                     {(activeMember.contributions || []).length > 0 && (
                       <div>
-                        <h3 className="text-xl font-semibold text-cyan-400 mb-4 flex items-center gap-2">
+                        <h3 className="text-xl font-semibold text-blue-300 mb-4 flex items-center gap-2">
                           <Award className="w-5 h-5" /> Key Contributions
                         </h3>
                         <ul className="space-y-3">
                           {activeMember.contributions.map((c, i) => (
                             <li key={i} className="flex items-start gap-3">
-                              <div className="w-2 h-2 rounded-full bg-cyan-400 mt-2 flex-shrink-0"></div>
+                              <div className="w-2 h-2 rounded-full bg-gray-400 mt-2 flex-shrink-0"></div>
                               <span className="text-gray-300">{c}</span>
                             </li>
                           ))}
@@ -440,7 +443,7 @@ function Team() {
                   <div className="space-y-8">
                     {/* GitHub Stats */}
                     <div className="bg-gray-800 rounded-xl p-6">
-                      <h3 className="text-xl font-semibold text-cyan-400 mb-6">
+                      <h3 className="text-xl font-semibold text-blue-300 mb-6">
                         GitHub Stats
                       </h3>
                       <div className="grid grid-cols-2 gap-4">
@@ -460,7 +463,7 @@ function Team() {
                           <p className="text-2xl font-bold">
                             {activeMember.publicRepos || 0}
                           </p>
-                          <p className="text-sm text-gray-400">Repositories</p>
+                          <p className="text-sm text-gray-400">Repos</p>
                         </div>
                         <div className="text-center p-4 bg-gray-900 rounded-lg border border-gray-700">
                           <p className="text-sm font-semibold">
