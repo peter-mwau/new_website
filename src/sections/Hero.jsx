@@ -39,7 +39,7 @@ const Hero = ({ onNavigate }) => {
         <nav className="mt-8 absolute bottom-12 backdrop-blur-md py-4">
           <ul className="flex items-center justify-center divide-x divide-white/20">
             {items.map((item) => (
-              <li key={item.section} className="first:pl-0 px-10">
+              <li key={item.section} className="first:pl-0 px-20">
                 <button
                   type="button"
                   onClick={() => {
