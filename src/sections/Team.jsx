@@ -249,16 +249,16 @@ function Team() {
 
       <div className="container mx-auto px-4 py-12">
         {/* Header */}
-        <div className="relative text-center mt-4 mb-30">
+        <div className="relative text-center mt-16 mb-16 h-24 sm:h-28 flex-shrink-0">
           <h2
-            className="absolute inset-0 flex items-center justify-center text-7xl md:text-8xl lg:text-9xl
-            font-extrabold text-white/10 uppercase tracking-widest pointer-events-none select-none"
+            className="absolute inset-0 flex items-center justify-center text-7xl sm:text-8xl md:text-9xl
+            font-extrabold text-white/8 uppercase tracking-widest pointer-events-none select-none"
           >
-            Professionals
+            Experts
           </h2>
           <div className="relative z-10">
             <h3 className="text-gray-400 text-3xl md:text-4xl mb-4 tracking-widest backdrop-blur-sm inline-block px-3 py-1 rounded-3xl">
-              Our Experts
+              Our Team
             </h3>
           </div>
         </div>

@@ -2,24 +2,23 @@
 import React, { useState, useRef, useEffect } from "react";
 import { motion } from "framer-motion";
 import servicesData from "../constants/services"; // <- your services JS module
-import { coder, cloud, ml, cyber, mobile, speed } from "../assets/images";
+import { coder, cloud, ml, web3, mobile } from "../assets/images";
 import VantaDotsBG from "../backgrounds/VantaDotsBg";
 import {
   Code2,
   Cloud,
   Brain,
-  Shield,
   Smartphone,
-  Gauge,
   Terminal,
   X,
   ArrowRightFromLineIcon,
+  BlocksIcon,
 } from "lucide-react";
 
 // --- Map service ids to icons/images you have available in your assets/icons ---
 const iconMap = {
   web2: Code2,
-  web3: Shield,
+  web3: BlocksIcon,
   android: Smartphone,
   ai_ml: Brain,
   cloud: Cloud,
@@ -27,10 +26,10 @@ const iconMap = {
 
 const imageMap = {
   web2: coder,
-  web3: cloud,
+  web3: web3,
   android: mobile,
   ai_ml: ml,
-  cloud: speed,
+  cloud: cloud,
 };
 
 // --- Convert imported JSON services into the shape the component expects ---
@@ -80,7 +79,11 @@ const Services = ({ onNavigate }) => {
 
   // Image helper (prefers local image, otherwise uses Unsplash)
   const getImageUrl = (service) => {
-    if (service.image && typeof service.image === "string" && service.image !== "") {
+    if (
+      service.image &&
+      typeof service.image === "string" &&
+      service.image !== ""
+    ) {
       return service.image;
     }
     const keyword = encodeURIComponent(service.imageKeyword || service.title);
@@ -193,29 +196,40 @@ const Services = ({ onNavigate }) => {
         className="fixed top-0 right-0 h-full w-80 backdrop-blur-sm z-60 p-6 overflow-y-auto bg-gray-900/70 border-l border-gray-800"
       >
         <div className="flex items-center justify-between mb-4">
-          <h3 className="text-gray-100 text-2xl font-bold text-center">Service Details</h3>
-          <button onClick={() => setShowSidebar(false)} aria-label="Close details">
+          <h3 className="text-gray-100 text-2xl font-bold text-center">
+            Service Details
+          </h3>
+          <button
+            onClick={() => setShowSidebar(false)}
+            aria-label="Close details"
+          >
             <X className="w-5 h-5 text-gray-300" />
           </button>
         </div>
 
         {!selectedService && (
           <div className="text-sm text-gray-400 mb-4">
-            Open any service card to view its offerings, tags, use cases and delivery model.
+            Open any service card to view its offerings, tags, use cases and
+            delivery model.
           </div>
         )}
 
         {selectedService && (
           <>
             <div className="mb-4">
-              <div className="text-sm text-gray-400">Selected</div>
-              <h4 className="text-lg font-semibold text-white mt-1">{selectedService.title}</h4>
-              <p className="text-sm text-gray-300 mt-2">{selectedService.description}</p>
+              <h4 className="text-lg font-semibold text-white mt-1">
+                {selectedService.title}
+              </h4>
+              <p className="text-sm text-gray-300 mt-2">
+                {selectedService.description}
+              </p>
             </div>
 
             {/* Offerings */}
             <div className="mb-4">
-              <h5 className="text-sm font-semibold text-blue-300 mb-2">Offerings</h5>
+              <h5 className="text-sm font-semibold text-blue-300 mb-2">
+                Offerings
+              </h5>
               <ul className="list-inside space-y-2 text-sm text-gray-200">
                 {selectedService.offerings.length > 0 ? (
                   selectedService.offerings.map((o, i) => (
@@ -236,7 +250,10 @@ const Services = ({ onNavigate }) => {
               <div className="flex flex-wrap gap-2">
                 {selectedService.tags.length > 0 ? (
                   selectedService.tags.map((tag, i) => (
-                    <span key={i} className="text-xs px-2 py-1 rounded-full bg-gray-800/60 border border-gray-700 text-blue-300">
+                    <span
+                      key={i}
+                      className="text-xs px-2 py-1 rounded-full bg-gray-800/60 border border-gray-700 text-blue-300"
+                    >
                       {tag}
                     </span>
                   ))
@@ -248,7 +265,9 @@ const Services = ({ onNavigate }) => {
 
             {/* Use Cases */}
             <div className="mb-4">
-              <h5 className="text-sm font-semibold text-blue-300 mb-2">Use Cases</h5>
+              <h5 className="text-sm font-semibold text-blue-300 mb-2">
+                Use Cases
+              </h5>
               <ul className="list-inside space-y-2 text-sm text-gray-200">
                 {selectedService.useCases.length > 0 ? (
                   selectedService.useCases.map((uc, i) => (
@@ -265,11 +284,16 @@ const Services = ({ onNavigate }) => {
 
             {/* Delivery Model */}
             <div className="mb-4">
-              <h5 className="text-sm font-semibold text-blue-300 mb-2">Delivery Model</h5>
+              <h5 className="text-sm font-semibold text-blue-300 mb-2">
+                Delivery Model
+              </h5>
               <div className="flex flex-col gap-2">
                 {selectedService.deliveryModel.length > 0 ? (
                   selectedService.deliveryModel.map((dm, i) => (
-                    <span key={i} className="text-sm px-3 py-2 rounded-md bg-gray-800/60 border border-gray-700 text-gray-200">
+                    <span
+                      key={i}
+                      className="text-sm px-3 py-2 rounded-md bg-gray-800/60 border border-gray-700 text-gray-200"
+                    >
                       {dm}
                     </span>
                   ))
@@ -286,7 +310,10 @@ const Services = ({ onNavigate }) => {
       <div className="relative z-10 py-24 px-4 md:px-8 lg:px-16 max-w-7xl mx-auto">
         <div className="relative text-center mb-30">
           {/* Background text */}
-          <h2 className="absolute inset-0 flex items-center justify-center text-7xl md:text-8xl lg:text-9xl font-extrabold text-white/10 uppercase tracking-widest pointer-events-none select-none">
+          <h2
+            className="absolute inset-0 flex items-center justify-center text-7xl sm:text-8xl md:text-9xl
+            font-extrabold text-white/8 uppercase tracking-widest pointer-events-none select-none"
+          >
             Expertise
           </h2>
 
@@ -329,16 +356,24 @@ const Services = ({ onNavigate }) => {
                 }}
               >
                 <div className="h-40 md:h-44 bg-gray-800">
-                  <img src={getImageUrl(service)} alt={service.title} className="w-full h-full object-cover" loading="lazy" />
+                  <img
+                    src={getImageUrl(service)}
+                    alt={service.title}
+                    className="w-full h-full object-cover"
+                    loading="lazy"
+                  />
                 </div>
                 <div className="p-6">
                   <div className="w-12 h-12 mt-4 mb-6 flex items-center justify-center rounded-md bg-blue-300/10">
                     <Icon className="w-7 h-7 text-blue-300" />
                   </div>
-                  <h3 className="text-xl font-semibold mb-2">{service.title}</h3>
+                  <h3 className="text-xl font-semibold mb-2">
+                    {service.title}
+                  </h3>
                   <p className="text-gray-300 text-sm">{service.description}</p>
                   <p className="text-sm text-blue-300 mt-4 hover:text-blue-300">
-                    Learn More <ArrowRightFromLineIcon className="w-4 h-4 inline ml-1" />
+                    Learn More{" "}
+                    <ArrowRightFromLineIcon className="w-4 h-4 inline ml-1" />
                   </p>
                 </div>
               </article>
@@ -350,7 +385,14 @@ const Services = ({ onNavigate }) => {
       {/* Modal */}
       {showModal && selectedService && (
         <div className="fixed inset-0 z-50 flex items-center justify-center">
-          <div className="absolute inset-0 bg-black/60" onClick={() => { closeModal(); setShowSidebar(false); }} aria-hidden />
+          <div
+            className="absolute inset-0 bg-black/60"
+            onClick={() => {
+              closeModal();
+              setShowSidebar(false);
+            }}
+            aria-hidden
+          />
 
           <motion.div
             initial={{ opacity: 0, y: 20, scale: 0.98 }}
@@ -364,25 +406,45 @@ const Services = ({ onNavigate }) => {
             onClick={(e) => e.stopPropagation()}
           >
             <div className="h-56 bg-gray-800">
-              <img src={getImageUrl(selectedService)} alt={selectedService.title} className="w-full h-full object-cover" />
+              <img
+                src={getImageUrl(selectedService)}
+                alt={selectedService.title}
+                className="w-full h-full object-cover"
+              />
             </div>
             <div className="p-6 md:p-8">
               <div className="flex items-start justify-between">
                 <div>
-                  <h3 className="text-2xl font-bold mb-2">{selectedService.title}</h3>
-                  <p className="text-gray-300 mb-4">{selectedService.description}</p>
+                  <h3 className="text-2xl font-bold mb-2">
+                    {selectedService.title}
+                  </h3>
+                  <p className="text-gray-300 mb-4">
+                    {selectedService.description}
+                  </p>
                 </div>
-                <button onClick={() => { closeModal(); setShowSidebar(false); }} aria-label="Close modal" className="ml-4">
+                <button
+                  onClick={() => {
+                    closeModal();
+                    setShowSidebar(false);
+                  }}
+                  aria-label="Close modal"
+                  className="ml-4"
+                >
                   <X className="w-6 h-6 text-gray-300" />
                 </button>
               </div>
 
               {/* keep tech stack in modal as additional info */}
               <div className="mt-4">
-                <h4 className="text-sm text-gray-400 mb-2">Relevant Tech Stack</h4>
+                <h4 className="text-sm text-gray-400 mb-2">
+                  Relevant Tech Stack
+                </h4>
                 <div className="flex flex-wrap gap-2">
                   {selectedService.techStack.map((t, i) => (
-                    <span key={i} className="text-xs px-3 py-1 rounded-full bg-gray-800/60 border border-gray-700 text-blue-300">
+                    <span
+                      key={i}
+                      className="text-xs px-3 py-1 rounded-full bg-gray-800/60 border border-gray-700 text-blue-300"
+                    >
                       {t}
                     </span>
                   ))}
@@ -395,10 +457,12 @@ const Services = ({ onNavigate }) => {
                   onClick={() => {
                     closeModal();
                     setShowSidebar(false);
-                    if (typeof onNavigate === "function") onNavigate("contacts");
+                    if (typeof onNavigate === "function")
+                      onNavigate("contacts");
                   }}
                   aria-label="Get in touch"
-                  className="px-4 py-2 rounded-full bg-blue-300 text-black font-medium">
+                  className="px-4 py-2 rounded-full bg-blue-300 text-black font-medium"
+                >
                   Get in touch
                 </button>
               </div>
