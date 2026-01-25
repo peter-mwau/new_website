@@ -1,6 +1,13 @@
-@import "tailwindcss";
+
+@import url("https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300..700;1,300..700&display=swap");
 @import "@fontsource/space-grotesk/700.css";
+@import "tailwindcss";
+
 
 body {
-    font-family: "Space Grotesk", sans-serif;
+  /* font-family: "Space Grotesk", sans-serif; */
+}
+
+h1 {
+  font-family: "Cormorant Garamond", serif;
 }
