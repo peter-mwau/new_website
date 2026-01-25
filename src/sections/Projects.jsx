@@ -16,87 +16,111 @@ import VantaGlobeBG from "../backgrounds/VantaGlobeBG";
 const sampleProjects = [
   {
     id: 1,
-    title: "Portfolio Website",
-    category: "Web Development",
+    title: "OpenHeart Chain",
+    category: "Web3 & Blockchain dApps",
     short:
-      "A responsive portfolio site with smooth animations and modern design.",
+      "Blockchain-powered donation system with end-to-end transparency, smart contract automation, and real-time tracking.",
     description:
-      "A fully responsive portfolio website built with modern web technologies, featuring smooth animations, dark/light mode, and optimized performance for all devices.",
+      "Blockchain-powered donation system with end-to-end transparency, smart contract automation, and real-time tracking.",
     longDescription:
-      "This portfolio website showcases my work with a focus on user experience and performance. It includes a custom animation system, accessibility features, and is fully responsive across all devices. The project emphasizes clean code and modern web practices.",
+      "A decentralized charitable giving platform built on blockchain technology, enabling transparent campaign creation, multi-token donations, and real-time impact tracking. Revolutionize charitable giving with zero platform fees and complete trust.",
     screenshots: [
-      "https://images.unsplash.com/photo-1509395176047-4a66953fd231?w=1200&q=80&auto=format&fit=crop",
-      "https://images.unsplash.com/photo-1498050108023-c5249f4df085?w=1200&q=80&auto=format&fit=crop",
-      "https://images.unsplash.com/photo-1512486130939-2c4f79935e4f?w=1200&q=80&auto=format&fit=crop",
-      "https://images.unsplash.com/photo-1551650975-87deedd944c3?w=1200&q=80&auto=format&fit=crop",
+      "/openchain1.png",
+      "/openchain2.png",
+      "/openchain3.png",
+      "/openchain4.png",
+      "/openchain5.png",
+      "/openchain6.png",
+      "/openchain7.png",
+      "/openchain8.png",
     ],
     details: [
-      "Built with React 18 + Vite for optimal performance",
-      "Mobile-first responsive layout with CSS Grid & Flexbox",
-      "Accessibility compliant (WCAG 2.1 AA)",
-      "Smooth page transitions with Framer Motion",
-      "SEO optimized with React Helmet",
-      "Dark/Light mode toggle with system preference detection",
-      "Performance optimization (Lighthouse score 98+)",
-      "Cross-browser compatibility testing",
+      "Transparent Campaigns: Create and manage fundraising campaigns with full blockchain transparency",
+      "Multi-Token Support: Accept donations in multiple tokens (USDC, WETH, WBTC) on Sepolia testnet",
+      "No Platform Fees: 100% of donations go directly to beneficiaries",
+      "Real-Time Tracking: Monitor campaign progress and donation impact instantly",
+      "Admin Dashboard: Manage token permissions and platform settings with role-based access control",
+      "Wallet Integration: Connect via MetaMask, Coinbase Wallet, Rainbow, or in-app web3 authentication",
+      "Dark/Light Mode: Seamless theme switching for user preference",
+      "Responsive Design: Works seamlessly on desktop and mobile devices",
     ],
-    tech: ["React", "Vite", "Tailwind CSS", "Framer Motion", "React Router"],
+    tech: [
+      "React",
+      "Vite",
+      "Tailwind CSS",
+      "Framer Motion",
+      "React Router",
+      "Solidity",
+      "Ethers.js",
+      "Hardhat",
+      "OpenZeppelin",
+    ],
     timeline: "3 months",
     team: "Solo Project",
-    status: "Live",
+    status: "Beta",
     link: "https://example.com",
-    github: "https://github.com/example",
+    github: "https://github.com/peter-mwau/openHeart-chain.git",
     challenges: [
-      "Implementing smooth scroll animations without performance issues",
-      "Creating reusable animation components",
-      "Optimizing bundle size for fast loading",
+      "Designing a secure multisig approval system that balances decentralization with practical governance",
+      "Implementing proper fund locking mechanisms that protect donors while allowing legitimate access to funds",
+      "Creating a user-friendly interface that abstracts blockchain complexity without sacrificing transparency",
+      "Ensuring gas efficiency while maintaining comprehensive audit trails",
+      "Developing a robust evidence submission system that prevents fraud while being accessible to non-technical users",
     ],
     solutions: [
-      "Used Intersection Observer API for scroll animations",
-      "Created custom hooks for reusable animation logic",
-      "Implemented code splitting and lazy loading",
+      "Successfully implementing a DAO-like governance model for campaign verification",
+      "Creating a fully transparent donation tracking system where users can see exactly how their contributions are being used",
+      "Building a secure smart contract architecture that protects funds until predetermined conditions are met",
+      "Developing an intuitive user experience that makes blockchain donations accessible to everyone",
+      "Establishing a complete accountability system with evidence requirements for fund utilization",
     ],
   },
   {
     id: 2,
-    title: "E‑Commerce Demo",
-    category: "Full Stack",
-    short: "Complete e-commerce solution with cart, checkout, and admin panel.",
+    title: "ForenSure",
+    category: "Web3 & Blockchain dApps",
+    short:
+      "Blockchain-powered digital forensics system ensuring secure and immutable tracking of evidence provenance.",
     description:
-      "A full-featured e-commerce platform demo with product management, shopping cart, checkout flow, and admin dashboard.",
+      "A blockchain-powered digital forensics system that ensures secure and immutable tracking of evidence provenance. By integrating advanced encryption techniques, ForenSure provides a tamper-proof chain of custody, enabling trusted data verification and seamless collaboration for investigators, auditors, and legal entities.",
     longDescription:
-      "This e-commerce demo application includes all essential features of a modern online store. It has a comprehensive product catalog with filtering and search, user authentication, shopping cart with persistent storage, secure checkout simulation, and an admin dashboard for product management.",
+      "ForenSure is a blockchain-powered digital forensics system that ensures secure and immutable tracking of evidence provenance. By integrating advanced encryption techniques, ForenSure provides a tamper-proof chain of custody, enabling trusted data verification and seamless collaboration for investigators, auditors, and legal entities.",
     screenshots: [
-      "https://images.unsplash.com/photo-1512436991641-6745cdb1723f?w=1200&q=80&auto=format&fit=crop",
-      "https://images.unsplash.com/photo-1524758631624-e2822e304c36?w=1200&q=80&auto=format&fit=crop",
-      "https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?w=1200&q=80&auto=format&fit=crop",
-      "https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?w=1200&q=80&auto=format&fit=crop",
+      "/forensure1.png",
+      "/forensure2.png",
+      "/forensure3.png",
+      "/forensure4.png",
+      "/forensure5.png",
+      "/forensure6.png",
     ],
     details: [
-      "Full-featured product catalog with search and filters",
-      "Shopping cart with persistent localStorage",
-      "User authentication with JWT tokens",
-      "Secure checkout flow with Stripe integration",
-      "Admin dashboard for product management",
-      "Order tracking and history",
-      "Responsive design for all devices",
-      "Performance monitoring and analytics",
+      "Secure and immutable tracking of evidence provenance",
+      "Advanced encryption techniques for data integrity and confidentiality",
+      "Tamper-proof chain of custody",
+      "Trusted data verification",
+      "Seamless collaboration for investigators, auditors, and legal entities",
+      "Integration with Pinata for IPFS file storage",
+      "Smart contract deployment on the SKALE network",
     ],
-    tech: ["React", "Node.js", "Express", "MongoDB", "Stripe", "Redux"],
-    timeline: "5 months",
+    tech: ["Vite + React", "Solidity", "Ethers.js", "IPFS", "Pinata", "SKALE"],
+    timeline: "4 months",
     team: "3 Developers",
     status: "Completed",
     link: "https://shop-demo.example.com",
-    github: "https://github.com/example/ecommerce",
+    github: "https://github.com/peter-mwau/ForenSure.git",
     challenges: [
-      "Managing complex state across multiple components",
-      "Implementing secure payment processing",
-      "Handling large product catalogs efficiently",
+      "Implementing secure evidence tracking on an immutable blockchain",
+      "Ensuring data integrity and confidentiality with advanced encryption",
+      "Creating a user-friendly interface for non-technical users",
+      "Integrating IPFS for decentralized file storage",
+      "Deploying smart contracts on the SKALE network",
     ],
     solutions: [
-      "Used Redux for centralized state management",
-      "Integrated Stripe with webhook verification",
-      "Implemented pagination and caching strategies",
+      "Developed a tamper-proof chain of custody using blockchain technology",
+      "Utilized encryption techniques to protect sensitive evidence data",
+      "Designed an intuitive UI for easy evidence management",
+      "Integrated Pinata for seamless IPFS file storage",
+      "Successfully deployed smart contracts on the SKALE network",
     ],
   },
   {
@@ -141,7 +165,7 @@ const sampleProjects = [
       "Applied virtualization for large data rendering",
     ],
   },
-    {
+  {
     id: 4,
     title: "Machine Learning Model",
     category: "AI/ML",
@@ -167,7 +191,14 @@ const sampleProjects = [
       "Automated retraining pipeline with Airflow",
       "Comprehensive documentation and reporting",
     ],
-    tech: ["Python", "scikit-learn", "Pandas", "Matplotlib", "Seaborn", "Airflow"],
+    tech: [
+      "Python",
+      "scikit-learn",
+      "Pandas",
+      "Matplotlib",
+      "Seaborn",
+      "Airflow",
+    ],
     timeline: "1 week",
     team: "1 Data Scientist",
     status: "Completed",
@@ -226,7 +257,7 @@ function Projects() {
   const prevShot = () => {
     if (!active) return;
     setShotIdx(
-      (s) => (s - 1 + active.screenshots.length) % active.screenshots.length
+      (s) => (s - 1 + active.screenshots.length) % active.screenshots.length,
     );
   };
 
@@ -320,7 +351,8 @@ function Projects() {
     const el = carouselRef.current;
     if (!el) return;
     const page = el.clientWidth * 0.9; // scroll almost one visible page
-    const left = direction === "next" ? el.scrollLeft + page : el.scrollLeft - page;
+    const left =
+      direction === "next" ? el.scrollLeft + page : el.scrollLeft - page;
     el.scrollTo({ left, behavior: "smooth" });
   };
 
@@ -405,8 +437,8 @@ function Projects() {
                     visibleCount === 1
                       ? "100%"
                       : visibleCount === 2
-                      ? "48%"
-                      : "31%", // ~3 per view with gaps
+                        ? "48%"
+                        : "31%", // ~3 per view with gaps
                 }}
               >
                 <div
@@ -444,8 +476,8 @@ function Projects() {
                             p.status === "Live"
                               ? "bg-green-500/20 text-green-300"
                               : p.status === "Completed"
-                              ? "bg-blue-500/20 text-blue-300"
-                              : "bg-yellow-500/20 text-yellow-300"
+                                ? "bg-blue-500/20 text-blue-300"
+                                : "bg-yellow-500/20 text-yellow-300"
                           }`}
                         >
                           {p.status}
@@ -514,8 +546,9 @@ function Projects() {
         {/* Project Detail Modal */}
         {active && (
           <div
-            className={`fixed inset-0 z-50 flex items-center justify-center p-4 ${isAnimating ? "animate-fadeIn" : ""
-              }`}
+            className={`fixed inset-0 z-50 flex items-center justify-center p-4 ${
+              isAnimating ? "animate-fadeIn" : ""
+            }`}
           >
             <div
               className="absolute inset-0 bg-black/40 backdrop-blur-md transition-opacity duration-300"
@@ -566,8 +599,11 @@ function Projects() {
                       <button
                         key={index}
                         onClick={() => setShotIdx(index)}
-                        className={`relative h-20 rounded-xl overflow-hidden transition-all duration-300 ${shotIdx === index ? "ring-2 ring-blue-400 scale-105" : "opacity-70 hover:opacity-100 hover:scale-105"
-                          }`}
+                        className={`relative h-20 rounded-xl overflow-hidden transition-all duration-300 ${
+                          shotIdx === index
+                            ? "ring-2 ring-blue-400 scale-105"
+                            : "opacity-70 hover:opacity-100 hover:scale-105"
+                        }`}
                       >
                         <img
                           src={img}
@@ -617,8 +653,8 @@ function Projects() {
                           active.status === "Live"
                             ? "bg-green-500/20 text-green-300"
                             : active.status === "Completed"
-                            ? "bg-blue-500/20 text-blue-300"
-                            : "bg-yellow-500/20 text-yellow-300"
+                              ? "bg-blue-500/20 text-blue-300"
+                              : "bg-yellow-500/20 text-yellow-300"
                         }`}
                       >
                         {active.status}
@@ -638,7 +674,9 @@ function Projects() {
                       <div className="w-2 h-2 rounded-full bg-blue-300"></div>
                       Project Overview
                     </h4>
-                    <p className="text-md text-white/80">{active.longDescription}</p>
+                    <p className="text-md text-white/80">
+                      {active.longDescription}
+                    </p>
                   </div>
 
                   {/* Key Features */}
