@@ -126,46 +126,45 @@ const sampleProjects = [
   },
   // Mike
   {
-    id: 3,
-    title: "Analytics Dashboard",
-    category: "Data Visualization",
-    short: "Real-time data visualization dashboard with interactive charts.",
-    description:
-      "An advanced analytics dashboard that visualizes complex data sets with interactive charts, real-time updates, and custom reporting.",
-    longDescription:
-      "This analytics dashboard provides businesses with insights through interactive data visualizations. It features real-time data streaming, multiple chart types, customizable dashboards, and export functionality. The dashboard helps users make data-driven decisions with clear visual representations of complex metrics.",
-    screenshots: [
-      "https://images.unsplash.com/photo-1518770660439-4636190af475?w=1200&q=80&auto=format&fit=crop",
-      "https://images.unsplash.com/photo-1505852679233-d9fd70aff56d?w=1200&q=80&auto=format&fit=crop",
-      "https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=1200&q=80&auto=format",
-      "https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=1200&q=80&auto=format",
-    ],
-    details: [
-      "Interactive charts with D3.js and Recharts",
-      "Real-time data updates via WebSocket",
-      "Customizable widget layout with drag & drop",
-      "Export functionality (PDF, CSV, PNG)",
-      "User role-based access control",
-      "Mobile-responsive design",
-      "Theme customization options",
-      "Data filtering and segmentation",
-    ],
-    tech: ["React", "D3.js", "WebSocket", "Node.js", "PostgreSQL", "Chart.js"],
-    timeline: "4 months",
-    team: "2 Developers + 1 Designer",
-    status: "Development",
-    link: "https://analytics-demo.example.com",
-    github: "https://github.com/example/dashboard",
-    challenges: [
-      "Handling real-time data synchronization",
-      "Creating responsive, interactive visualizations",
-      "Managing large data sets efficiently",
-    ],
-    solutions: [
-      "Implemented WebSocket for real-time updates",
-      "Used D3.js for custom chart interactions",
-      "Applied virtualization for large data rendering",
-    ],
+      "id": 3,
+      "title": "Voice-to-Order AI System",
+      "category": "Conversational AI & Automation",
+      "short": "AI-powered voice system that automates restaurant orders and payments.",
+      "description":
+        "A real-time voice-to-order pipeline that handles customer calls, processes food orders, and manages payments without human intervention.",
+      "longDescription":
+        "Developed for AmigosGrill UK, this system replaces manual phone ordering with a conversational AI agent. The solution handles the entire customer journey—from answering calls to checking inventory and authorizing payments via Square POS. It includes a custom-built React dashboard that allows restaurant staff to track call analytics, conversion rates, and live order status in real-time.",
+      "screenshots": [
+        "/screenshot_dashboard_overview.png",
+        "/screenshot_call_analytics.png",
+        "/screenshot_pending_orders.png",
+        "/screenshot_menu_management.png"
+      ],
+      "details": [
+        "Real-time voice-to-order pipeline using Vapi and Twilio",
+        "Custom Flask webhooks for order logic and inventory lookups",
+        "Secure payment processing via Square POS API integration",
+        "Live analytics dashboard tracking call duration and conversion rates",
+        "Automated menu management and item blacklisting system",
+        "Reduced manual employee handling time for phone orders",
+        "Persistent data storage for order history using MongoDB"
+      ],
+      "tech": ["Python", "Flask", "React", "MongoDB", "Twilio", "Vapi", "Square API"],
+      "timeline": "4 months",
+      "team": "Solo Developer (Contract)",
+      "status": "Completed",
+      "link": "https://amigosgrill-demo.example.com",
+      "github": "https://github.com/Mickmacha/voice-order-system",
+      "challenges": [
+        "Managing real-time voice latency and response accuracy",
+        "Building logic for complex, customized food orders",
+        "Ensuring secure and reliable POS payment synchronization"
+      ],
+      "solutions": [
+        "Optimized Flask webhooks for low-latency voice interactions",
+        "Created a custom API layer to handle menu variations and pricing",
+        "Implemented robust error handling for transaction authorizations"
+      ]
   },
   // Cliff
   {
