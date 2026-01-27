@@ -14,7 +14,7 @@ function Navbar({ activeSection, setActiveSection }) {
   };
 
   return (
-    <nav className="relative z-50 px-8 py-10 backdrop-blur-sm border-white/10">
+    <nav className="relative z-50 px-8 py-2 backdrop-blur-sm border-white/10">
       <div className="max-w-7xl mx-auto flex justify-between items-center">
         {/* Logo */}
         <button
@@ -22,10 +22,7 @@ function Navbar({ activeSection, setActiveSection }) {
           onClick={() => navigate("hero")}
           className="flex gap-3 items-center text-white"
         >
-          <img src="/vite.svg" alt="Logo" className="h-8" />
-          <span className="text-gray-100 text-xl bg-clip-text font-bold tracking-widest uppercase">
-            Novalorx Labs
-          </span>
+          <img src="/Novalorx Logo.svg" alt="Logo" className="h-32 w-40" />
         </button>
 
         {/* Desktop menu */}

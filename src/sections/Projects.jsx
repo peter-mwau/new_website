@@ -167,6 +167,7 @@ const sampleProjects = [
       "Applied virtualization for large data rendering",
     ],
   },
+  // Cliff
   {
     id: 4,
     title: "Machine Learning Model",
@@ -217,110 +218,9 @@ const sampleProjects = [
       "Applied virtualization for large data rendering",
     ],
   },
-  // Cliff
-  {
-    id: 5,
-    title: "Machine Learning Model",
-    category: "AI/ML",
-    short: "Predictive model for customer churn using Python and scikit-learn.",
-    description:
-      "A machine learning model that predicts customer churn based on historical data and user behavior patterns.",
-    longDescription:
-      "This project involved developing a predictive model to identify customers at risk of churning. Using Python and scikit-learn, we processed large datasets, engineered relevant features, and trained various classification algorithms. The final model achieved high accuracy and was integrated into the company's CRM system to proactively address customer retention.",
-    screenshots: [
-      "https://images.unsplash.com/photo-1518770660439-4636190af475?w=1200&q=80&auto=format&fit=crop",
-      "https://images.unsplash.com/photo-1505852679233-d9fd70aff56d?w=1200&q=80&auto=format&fit=crop",
-      "https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=1200&q=80&auto=format",
-      "https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=1200&q=80&auto=format",
-    ],
-    details: [
-      "Data preprocessing and cleaning with Pandas",
-      "Feature engineering to improve model accuracy",
-      "Trained multiple classification algorithms (Logistic Regression, Random Forest, SVM)",
-      "Deep learning model using TensorFlow and Keras",
-      "Model evaluation using cross-validation and ROC-AUC",
-      "Integrated model into CRM for real-time predictions",
-      "Created visualizations with Matplotlib and Seaborn",
-      "Automated retraining pipeline with Airflow",
-      "Comprehensive documentation and reporting",
-    ],
-    tech: [
-      "Python",
-      "scikit-learn",
-      "Pandas",
-      "Matplotlib",
-      "Seaborn",
-      "Airflow",
-    ],
-    timeline: "1 week",
-    team: "1 Data Scientist",
-    status: "Completed",
-    link: "https://analytics-demo.example.com",
-    github: "https://github.com/example/dashboard",
-    challenges: [
-      "Handling real-time data synchronization",
-      "Creating responsive, interactive visualizations",
-      "Managing large data sets efficiently",
-    ],
-    solutions: [
-      "Implemented WebSocket for real-time updates",
-      "Used D3.js for custom chart interactions",
-      "Applied virtualization for large data rendering",
-    ],
-  },
-  {
-    id: 6,
-    title: "Machine Learning Model",
-    category: "AI/ML",
-    short: "Predictive model for customer churn using Python and scikit-learn.",
-    description:
-      "A machine learning model that predicts customer churn based on historical data and user behavior patterns.",
-    longDescription:
-      "This project involved developing a predictive model to identify customers at risk of churning. Using Python and scikit-learn, we processed large datasets, engineered relevant features, and trained various classification algorithms. The final model achieved high accuracy and was integrated into the company's CRM system to proactively address customer retention.",
-    screenshots: [
-      "https://images.unsplash.com/photo-1518770660439-4636190af475?w=1200&q=80&auto=format&fit=crop",
-      "https://images.unsplash.com/photo-1505852679233-d9fd70aff56d?w=1200&q=80&auto=format&fit=crop",
-      "https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=1200&q=80&auto=format",
-      "https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=1200&q=80&auto=format",
-    ],
-    details: [
-      "Data preprocessing and cleaning with Pandas",
-      "Feature engineering to improve model accuracy",
-      "Trained multiple classification algorithms (Logistic Regression, Random Forest, SVM)",
-      "Deep learning model using TensorFlow and Keras",
-      "Model evaluation using cross-validation and ROC-AUC",
-      "Integrated model into CRM for real-time predictions",
-      "Created visualizations with Matplotlib and Seaborn",
-      "Automated retraining pipeline with Airflow",
-      "Comprehensive documentation and reporting",
-    ],
-    tech: [
-      "Python",
-      "scikit-learn",
-      "Pandas",
-      "Matplotlib",
-      "Seaborn",
-      "Airflow",
-    ],
-    timeline: "1 week",
-    team: "1 Data Scientist",
-    status: "Completed",
-    link: "https://analytics-demo.example.com",
-    github: "https://github.com/example/dashboard",
-    challenges: [
-      "Handling real-time data synchronization",
-      "Creating responsive, interactive visualizations",
-      "Managing large data sets efficiently",
-    ],
-    solutions: [
-      "Implemented WebSocket for real-time updates",
-      "Used D3.js for custom chart interactions",
-      "Applied virtualization for large data rendering",
-    ],
-  },
   // Norman
   {
-    id: 7,
+    id: 5,
     title: "Ecommerce Platform",
     category: "Web 2",
     short:
@@ -377,7 +277,7 @@ const sampleProjects = [
     ],
   },
   {
-    id: 8,
+    id: 6,
     title: "PhishGuard - Phishing Detection System",
     category: "web 2",
     short:
