@@ -490,18 +490,20 @@ function Projects() {
 
       <div className="relative z-10 max-w-6xl w-full px-4 md:px-6">
         {/* Header */}
-        <div className="relative text-center mt-4 mb-30">
+        <div className="relative mt-4 mb-16 h-28 sm:h-32 flex items-center justify-center">
+          {/* Background text */}
           <h2
-            className="absolute inset-0 flex items-center justify-center text-7xl sm:text-8xl md:text-9xl
-            font-extrabold text-white/8 uppercase tracking-widest pointer-events-none select-none"
+            className="absolute inset-0 flex items-center justify-center text-center text-7xl sm:text-8xl md:text-9xl font-extrabold text-white/10 uppercase tracking-widest
+                        pointer-events-none select-none"
           >
             Projects
           </h2>
-          <div className="relative z-10">
-            <h3 className="text-gray-400 text-3xl md:text-4xl mb-4 tracking-widest backdrop-blur-sm inline-block px-3 py-1 rounded-3xl">
-              Our Featured Work
-            </h3>
-          </div>
+
+          {/* Foreground text */}
+          <h3
+            className="text-gray-400 relative z-10 text-3xl md:text-4xl tracking-widest backdrop-blur-sm rounded-3xl">
+            Our Featured Work
+          </h3>
         </div>
 
         {/* Carousel wrapper + arrows */}

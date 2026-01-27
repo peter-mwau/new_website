@@ -84,18 +84,20 @@ function Contacts() {
       {/* Page content container — header + main area that fills viewport */}
       <div className="container mx-auto px-4 md:px-6 relative z-10 max-h-[calc(90vh-4rem)] flex flex-col">
         {/* Header (fixed-ish height) */}
-        <div className="relative text-center mt-16 mb-16 h-24 sm:h-28 flex-shrink-0">
+        <div className="relative mt-8 mb-16 h-28 sm:h-32 flex items-center justify-center">
+          {/* Background text */}
           <h2
-            className="absolute inset-0 flex items-center justify-center text-7xl sm:text-8xl md:text-9xl
-            font-extrabold text-white/8 uppercase tracking-widest pointer-events-none select-none"
+            className="absolute inset-0 flex items-center justify-center text-center text-7xl sm:text-8xl md:text-9xl font-extrabold text-white/10 uppercase tracking-widest
+                        pointer-events-none select-none"
           >
             Our Contact
           </h2>
-          <div className="relative z-10">
-            <h3 className="text-gray-400 text-3xl md:text-4xl mb-4 tracking-widest backdrop-blur-sm inline-block px-3 py-1 rounded-3xl">
-              Get in Touch
-            </h3>
-          </div>
+
+          {/* Foreground text */}
+          <h3
+            className="text-gray-400 relative z-10 text-3xl md:text-4xl tracking-widest backdrop-blur-sm rounded-3xl">
+            Get in Touch
+          </h3>
         </div>
 
         {/* Main area — ONLY scrollable on small screens; fixed (no scroll) on md+ */}
